@@ -1,0 +1,53 @@
+{
+    "name": "driesvints/php-github-sponsors",
+    "description": "A package for PHP to work with GitHub Sponsors.",
+    "keywords": ["GitHub", "Sponsors"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/driesvints/php-github-sponsors/issues",
+        "source": "https://github.com/driesvints/php-github-sponsors"
+    },
+    "authors": [
+        {
+            "name": "Dries Vints",
+            "homepage": "https://driesvints.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "http-interop/http-factory-guzzle": "^1.0",
+        "knplabs/github-api": "^3.3"
+    },
+    "require-dev": {
+        "illuminate/support": "^8.0",
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0",
+        "spatie/ray": "^1.27"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dries\\Sponsors\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Sponsors": "Dries\\Sponsors\\Facades\\SponsorsFacade"
+            },
+            "providers": [
+                "Dries\\Sponsors\\SponsorsServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
