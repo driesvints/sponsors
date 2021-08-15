@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/packagist/driesvints/php-github-sponsors" alt="Total Downloads">
 </a>
 
-PHP GitHub Sponsors is a package that integrates directly with [the GitHub Sponsors GraphQL API](https://docs.github.com/en/sponsors/integrating-with-github-sponsors/getting-started-with-the-sponsors-graphql-api). Using it, you can easily check if a GitHub user or organization is sponsoring another user or organization. This helps you implement powerful ACL capibilities in your application and the ability to grant users access to specific resources when they sponsor you.
+PHP GitHub Sponsors is a package that integrates directly with [the GitHub Sponsors GraphQL API](https://docs.github.com/en/sponsors/integrating-with-github-sponsors/getting-started-with-the-sponsors-graphql-api). Using it, you can easily check if a GitHub account is sponsoring another account. This helps you implement powerful ACL capibilities in your application and the ability to grant users access to specific resources when they sponsor you.
 
 The library is PHP agnostic but provides deep integration with [Laravel](https://laravel.com).
 
@@ -44,6 +44,8 @@ Here's some of the features on our roadmap. We'd always appreciate PR's to kicks
 - Check sponsorship tiers
 - Automatically grant and revoke perks
 - Track sponsored amounts
+
+Not seeing the feature you seek? Consider opening up [an issue](https://github.com/driesvints/php-github-sponsors/issues).
 
 ## Requirements
 
@@ -86,7 +88,7 @@ GH_SPONSORS_TOKEN=ghp_xxx
 
 All of this library's API calls are made from the core `Dries\Sponsors\Sponsors` client. The client makes use of the [PHP GitHub API](https://github.com/KnpLabs/php-github-api) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
 
-To get started, initialize the GitHub API client, authenticate using the token (preferable set through an environment variable) and initialize the Sponsors client:
+To get started, initialize the GitHub API client, authenticate using the token (preferable through an environment variable) and initialize the Sponsors client:
 
 ```php
 use Dries\Sponsors\Sponsors;
@@ -218,7 +220,7 @@ class User extends Model;
 }
 ```
 
-What's important is that there's a `github` column (`string`) on the mode's table. This column will need to have the GitHub username that belongs to the model.
+What's important is that there's a `github` column (`string`) on the model's table. This column will need to have the GitHub username that belongs to the model.
 
 With an Eloquent model, you also don't need to pass a personal access token. By default, it'll use the GitHub Sponsors client that's bound to the container. If you do want to identify the sponsorable to also check their private sponsorships you can add a `github_token` column (`string`) to the model's table and make sure the value is filled in. That way, all API requests will behave as if the user themselves is doing it.
 
@@ -316,13 +318,15 @@ The GitHub GraphQL API was designed in a way that there's a differentation betwe
 
 ### Why is the sponsorship check returning `false` for private sponsorship checks?
 
-The way the GitHub GraphQL mostly works is [through personal access tokens](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql). Because these tokens are always created from a specific user in GitHub, the API calls will return results based on the visibility of the user and their access to the target resource. For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `isSponsoredBy('driesvints', 'spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `isSponsoredBy('nunomaduro', 'spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account. 
+The way the GitHub GraphQL mostly works is [through personal access tokens](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql). Because these tokens are always created from a specific user in GitHub, the API calls will return results based on the visibility of the user and their access to the target resource.
+
+For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `isSponsoredBy('driesvints', 'spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `isSponsoredBy('nunomaduro', 'spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account. 
 
 Public sponsorships will always be visible though, regardless on which the token was created.
 
 ### Why are the `user:read` and `org:read` scopes needed?
 
-These are both needed to authenticate the GitHub client to perform checks on a user's private sponsorships. Since by default these are hidden from any public API call, we need to explicitely grant GitHub permission to read these.
+These are both needed to authenticate the GitHub client to perform checks on a user's private sponsorships. Since by default these are hidden from any public API call, we need to explicitely grant consumers of the token permission to read these.
 
 ## Changelog
 
@@ -330,8 +334,8 @@ Check out the [CHANGELOG](CHANGELOG.md) in this repository for all the recent ch
 
 ## Maintainers
 
-Blade Icons is developed and maintained by [Dries Vints](https://driesvints.com).
+PHP GitHub Sponsors is developed and maintained by [Dries Vints](https://driesvints.com).
 
 ## License
 
-Blade Icons is open-sourced software licensed under [the MIT license](LICENSE.md).
+PHP GitHub Sponsors is open-sourced software licensed under [the MIT license](LICENSE.md).
