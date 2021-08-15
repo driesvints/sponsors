@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dries\Sponsors\Facades;
 
-use Illuminate\Support\Facades\Facade;
 use Dries\Sponsors\Sponsors;
+use Illuminate\Support\Facades\Facade;
 
 final class SponsorsFacade extends Facade
 {
