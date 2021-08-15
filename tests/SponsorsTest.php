@@ -51,7 +51,7 @@ class SponsorsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_determine_if_the_authed_account_is_sponsoring_an_organisation()
+    public function it_can_determine_if_the_authed_account_is_sponsoring_an_organization()
     {
         $this->assertTrue(
             $this->client()->isViewerSponsoringOrganization('Homebrew')
@@ -67,7 +67,7 @@ class SponsorsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_determine_if_the_authed_account_is_sponsored_by_an_organisation()
+    public function it_can_determine_if_the_authed_account_is_sponsored_by_an_organization()
     {
         $this->assertTrue(
             $this->client()->isViewerSponsoredByOrganization('kontentino')
