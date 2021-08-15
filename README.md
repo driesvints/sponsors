@@ -281,6 +281,8 @@ class Organization
 }
 ```
 
+> ⚠️ It is important that the organization is provided with a personal access token of a GitHub user that has access to the organization.
+
 #### Customizing the Sponsorable client
 
 When providing the sponsorable with a token, it'll initialize a new GitHub client. You may also provide [the pre-set client](#initializing-the-client) if you wish:
