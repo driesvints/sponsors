@@ -29,10 +29,10 @@ $github->authenticate(getenv('GH_SPONSORS_TOKEN'), null, GitHub::AUTH_ACCESS_TOK
 $sponsors = new Sponsors($github);
 
 // Check if driesvints is being sponsored by nunomaduro...
-$sponsors->isSponsoredBy($account = 'driesvints', $sponsor = 'nunomaduro');
+$sponsors->isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$sponsors->isOrganizationSponsoredBy($account = 'blade-ui-kit', $sponsor = 'nunomaduro');
+$sponsors->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 ## Planned features
@@ -118,10 +118,10 @@ At its core, this library allows you to easily check wether a specific user or o
 
 ```php
 // Check if driesvints is being sponsored by nunomaduro...
-$sponsors->isSponsoredBy($account = 'driesvints', $sponsor = 'nunomaduro');
+$sponsors->isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$sponsors->isOrganizationSponsoredBy($account = 'blade-ui-kit', $sponsor = 'nunomaduro');
+$sponsors->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 These are all simply boolean checks. Note that while we need to know beforehand if the account the check is happening on is a regular GitHub user or a GitHub organization, we do not need to know if the sponsor is a user or an organization.
@@ -152,10 +152,10 @@ If you use Laravel you can also make use of the shipped `Sponsors` facade:
 
 ```php
 // Check if driesvints is being sponsored by nunomaduro...
-Sponsors::isSponsoredBy($account = 'driesvints', $sponsor = 'nunomaduro');
+Sponsors::isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-Sponsors::isOrganizationSponsoredBy($account = 'blade-ui-kit', $sponsor = 'nunomaduro');
+Sponsors::isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 ### Sponsorable Behavior
