@@ -1,7 +1,7 @@
 {
     "name": "driesvints/php-github-sponsors",
     "description": "A package for PHP to work with GitHub Sponsors.",
-    "keywords": ["GitHub", "Sponsors"],
+    "keywords": ["GitHub", "Sponsors", "Laravel"],
     "license": "MIT",
     "support": {
         "issues": "https://github.com/driesvints/php-github-sponsors/issues",
