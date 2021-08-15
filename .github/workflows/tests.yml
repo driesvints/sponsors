@@ -35,4 +35,8 @@ jobs:
           composer update --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
-        run: vendor/bin/phpunit --verbose
+        run: vendor/bin/phpunit --exclude-group Private --verbose
+
+      - name: Execute private sponsors tests
+        if: github.ref == 'refs/heads/main'
+        run: vendor/bin/phpunit tests/PrivateSponsorsTest.php --verbose
