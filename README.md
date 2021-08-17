@@ -322,7 +322,7 @@ The way the GitHub GraphQL mostly works is [through personal access tokens](http
 
 For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `isSponsoredBy('driesvints', 'spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `isSponsoredBy('nunomaduro', 'spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account. 
 
-Public sponsorships will always be visible though, regardless on which the token was created.
+Public sponsorships will always be visible though, regardless on which user the token was created.
 
 ### Why are the `user:read` and `org:read` scopes needed?
 
