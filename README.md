@@ -100,7 +100,7 @@ $github->authenticate(getenv('GH_SPONSORS_TOKEN'), null, GitHub::AUTH_ACCESS_TOK
 $sponsors = new Sponsors($github);
 ```
 
-This will be the client we'll use throughout the rest of these docs. To save space, we won't be repeating this step. Instead we'll re-use the `$sponsors` variable in the below examples.
+This will be the client we'll use throughout the rest of these docs. We'll re-use the `$sponsors` variable in the below examples.
 
 ### Initializing the client using Laravel
 
