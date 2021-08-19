@@ -130,7 +130,7 @@ These are all simply boolean checks. Note that while we need to know beforehand 
 
 ### Checking Sponsorships as a Viewer
 
-You can also perform these checks from a point-of-view as the personal access token that was used to authenticate the GitHub API client. If you'll use the methods below, it would be as if you'd be browsing GitHub as the user that created the token.
+You can also perform these checks from the point-of-view of the user that was used to authenticate the GitHub API client. If you'll use the methods below, it would be as if you'd be browsing GitHub as the user that created the token.
 
 ```php
 // Is the current authed user sponsoring driesvints?
@@ -206,9 +206,9 @@ $user->isSponsoring('nunomaduro');
 $user->isSponsoringOrganization('spatie');
 ```
 
-#### Using the sponsorable with Eloquent
+#### Using the `Sponsorable` trait with Eloquent
 
-If your sponsorable is an Eloquent model from Laravel, the integration differs a bit:
+If your sponsorable is an Eloquent model from Laravel, the setup differs a bit:
 
 ```php
 use Dries\Sponsors\Concerns\Sponsorable;
@@ -314,6 +314,10 @@ class User
 ### Why are there separate organization methods?
 
 The GitHub GraphQL API was designed in a way that there's a differentation between user accounts and organization accounts. Because we need to be able to perform sponsorship checks on both of them we both need to use [the `user` query](https://docs.github.com/en/graphql/reference/queries#user) as well as [the `organization` query](https://docs.github.com/en/graphql/reference/queries#organization). Therefor, we need to know beforehand if the entity we're doing the sponsorship check against is either a user or an organization.
+
+### Why is the `Viewer` keyword necessary in some of the methods?
+
+"Viewer" is also a concept in the GraphQL API of GitHub. It represents the currently authenticated user that's performing the API requests. That's why I've decided to also use this terminology in the package's API.
 
 ### Why is the sponsorship check returning `false` for private sponsorship checks?
 
