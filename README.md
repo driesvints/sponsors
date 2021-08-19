@@ -43,6 +43,7 @@ Here's some of the features on our roadmap. We'd always appreciate PR's to kicks
 - Retrieve sponsorships
 - Check sponsorship tiers
 - Automatically grant and revoke perks
+- Sync through GitHub webhooks
 - Track sponsored amounts
 
 Not seeing the feature you seek? Consider opening up [an issue](https://github.com/driesvints/php-github-sponsors/issues).
