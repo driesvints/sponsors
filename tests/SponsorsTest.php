@@ -79,7 +79,7 @@ class SponsorsTest extends TestCase
         return $this->app->make(Sponsors::class);
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [SponsorsServiceProvider::class];
     }

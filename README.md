@@ -49,7 +49,7 @@ Not seeing the feature you seek? Consider opening up [an issue](https://github.c
 
 ## Requirements
 
-- PHP 7.4 or higher
+- PHP 8.0 or higher
 - Laravel 8.0 or higher (optional when using Laravel)
 
 ## Installation
@@ -297,11 +297,10 @@ class User
 {
     use Sponsorable;
 
-    public function __construct()
-    {
+    public function __construct(
         private Sponsors $sponsors,
         private string $github
-    }
+    ) {}
 
     protected function sponsorsClient(): Sponsors
     {

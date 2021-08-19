@@ -84,7 +84,7 @@ class SponsorableTest extends TestCase
         return $this->sponsorable($username, true);
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [SponsorsServiceProvider::class];
     }

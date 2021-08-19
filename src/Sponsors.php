@@ -8,12 +8,9 @@ use Github\Client as GitHub;
 
 final class Sponsors
 {
-    private GitHub $github;
-
-    public function __construct(GitHub $github)
-    {
-        $this->github = $github;
-    }
+    public function __construct(
+        private GitHub $github
+    ) {}
 
     public function isSponsoredBy(string $account, string $sponsor, bool $isAccountAnOrganization = false): bool
     {
