@@ -35,7 +35,7 @@ $sponsors->isSponsoredBy('driesvints', 'nunomaduro');
 $sponsors->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
-## Planned features
+## Roadmap
 
 Here's some of the features on our roadmap. We'd always appreciate PR's to kickstart these.
 
