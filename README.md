@@ -42,6 +42,7 @@ Here's some of the features on our roadmap. We'd always appreciate PR's to kicks
 - Caching
 - Retrieve sponsorships
 - Check sponsorship tiers
+- Create new Sponsorships
 - Automatically grant and revoke perks
 - Sync through GitHub webhooks
 - Track sponsored amounts
