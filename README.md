@@ -36,13 +36,13 @@ $client->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 
 Here's some of the features on our roadmap. We'd always appreciate PR's to kickstart these.
 
-- Caching
-- Retrieve sponsorships
-- Check sponsorship tiers
-- Create new Sponsorships
-- Automatically grant and revoke perks
-- Sync through GitHub webhooks
-- Track sponsored amounts
+- [Caching](https://github.com/driesvints/php-github-sponsors/issues/1)
+- [Retrieve sponsorships](https://github.com/driesvints/php-github-sponsors/issues/2)
+- [Check sponsorship tiers](https://github.com/driesvints/php-github-sponsors/issues/3)
+- [Create new Sponsorships](https://github.com/driesvints/php-github-sponsors/issues/5)
+- [Automatically grant and revoke perks](https://github.com/driesvints/php-github-sponsors/issues/7)
+- [Sync sponsorships through GitHub webhooks](https://github.com/driesvints/php-github-sponsors/issues/6)
+- [Track sponsored amounts](https://github.com/driesvints/php-github-sponsors/issues/8)
 
 Not seeing the feature you seek? Consider opening up [an issue](https://github.com/driesvints/php-github-sponsors/issues).
 
