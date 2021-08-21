@@ -16,8 +16,7 @@
     "require": {
         "php": "^8.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "http-interop/http-factory-guzzle": "^1.0",
-        "knplabs/github-api": "^3.3"
+        "illuminate/http": "^8.0"
     },
     "require-dev": {
         "illuminate/support": "^8.0",

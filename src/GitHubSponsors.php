@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Dries\GitHubSponsors;
 
-use Github\Client as GitHub;
+use Dries\GitHubSponsors\Exceptions\BadCredentialsException;
+use Dries\GitHubSponsors\Exceptions\QueryException;
+use Illuminate\Http\Client\Factory;
 
 final class GitHubSponsors
 {
     public function __construct(
-        private GitHub $github
+        private Factory $http,
+        private string $token
     ) {}
 
     public function isSponsoredBy(string $account, string $sponsor, bool $isAccountAnOrganization = false): bool
@@ -110,6 +113,22 @@ final class GitHubSponsors
 
     private function graphql($query, array $variables = []): array
     {
-        return $this->github->api('graphql')->execute($query, $variables)['data'];
+        $response = $this->http
+            ->withToken($this->token)
+            ->asJson()
+            ->post('https://api.github.com/graphql', [
+                'query' => $query,
+                'variables' => $variables,
+            ]);
+
+        if ($response->status() === 401) {
+            throw BadCredentialsException::fromHttpResponse($response);
+        }
+
+        if ($response->clientError()) {
+            throw QueryException::fromHttpResponse($response);
+        }
+
+        return $response->json('data');
     }
 }

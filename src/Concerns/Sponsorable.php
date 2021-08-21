@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dries\GitHubSponsors\Concerns;
 
 use Dries\GitHubSponsors\GitHubSponsors;
-use Github\Client as GitHub;
+use Illuminate\Http\Client\Factory;
 
 trait Sponsorable
 {
@@ -84,10 +84,6 @@ trait Sponsorable
             return app(GitHubSponsors::class);
         }
 
-        $client = new GitHub();
-
-        $client->authenticate($this->gitHubToken(), null, GitHub::AUTH_ACCESS_TOKEN);
-
-        return new GitHubSponsors($client);
+        return new GitHubSponsors(new Factory(), $this->gitHubToken());
     }
 }

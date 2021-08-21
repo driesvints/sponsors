@@ -21,12 +21,9 @@ Here's an example how you'd use it:
 
 ```php
 use Dries\GitHubSponsors\GitHubSponsors;
-use GitHub\Client as GitHub;
+use Illuminate\Http\Client\Factory;
 
-$github = new GitHub();
-$github->authenticate(getenv('GH_SPONSORS_TOKEN'), null, GitHub::AUTH_ACCESS_TOKEN);
-
-$client = new GitHubSponsors($github);
+$client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
 
 // Check if driesvints is being sponsored by nunomaduro...
 $client->isSponsoredBy('driesvints', 'nunomaduro');
@@ -88,18 +85,15 @@ GH_SPONSORS_TOKEN=ghp_xxx
 
 ### Initializing the client
 
-All of this library's API calls are made from the core `Dries\GitHubSponsors\GitHubSponsors` client. The client makes use of the [PHP GitHub API](https://github.com/KnpLabs/php-github-api) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
+All of this library's API calls are made from the core `Dries\GitHubSponsors\GitHubSponsors` client. The client makes use of the [Illuminate HTTP Client](https://laravel.com/docs/http-client) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
 
 To get started, initialize the GitHub API client, authenticate using the token (preferable through an environment variable) and initialize the Sponsors client:
 
 ```php
 use Dries\GitHubSponsors\GitHubSponsors;
-use GitHub\Client as GitHub;
+use Illuminate\Http\Client\Factory;
 
-$github = new GitHub();
-$github->authenticate(getenv('GH_SPONSORS_TOKEN'), null, GitHub::AUTH_ACCESS_TOKEN);
-
-$client = new GitHubSponsors($github);
+$client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
 ```
 
 This will be the client we'll use throughout the rest of these docs. We'll re-use the `$client` variable in the below examples.
@@ -184,7 +178,7 @@ class User
 }
 ```
 
-The `$github_token` can be the same personal access token you use to initialize the GitHub API Client but **if you also want to check private sponsorships on the user** you'll need them to provide you with their own token.
+The `$github_token` can be the same personal access token you use to initialize the `GitHubSponsors` client but **if you also want to check private sponsorships on the user** you'll need them to provide you with their own token.
 
 > ⚠️ Note that there is no check being performed on wether the github username and a user provided personal access token belong together. This is your own responsibility to do through [an API call to GitHub](https://docs.github.com/en/graphql/reference/queries#user). 
 
