@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Dries\Sponsors;
+namespace Dries\GitHubSponsors;
 
 use Github\Client as GitHub;
 use Illuminate\Support\ServiceProvider;
 
-final class SponsorsServiceProvider extends ServiceProvider
+final class GitHubSponsorsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/github-sponsors.php', 'github-sponsors');
 
-        $this->app->singleton(Sponsors::class, function ($app) {
+        $this->app->singleton(GitHubSponsors::class, function ($app) {
             $config = $app['config']->get('github-sponsors');
 
             $client = new GitHub();
 
             $client->authenticate($config['token'], null, GitHub::AUTH_ACCESS_TOKEN);
 
-            return new Sponsors($client);
+            return new GitHubSponsors($client);
         });
     }
 

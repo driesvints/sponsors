@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Dries\Sponsors\Sponsors;
-use Dries\Sponsors\SponsorsServiceProvider;
+use Dries\GitHubSponsors\GitHubSponsors;
+use Dries\GitHubSponsors\GitHubSponsorsServiceProvider;
 use Orchestra\Testbench\TestCase;
 
-class SponsorsTest extends TestCase
+class GitHubSponsorsTest extends TestCase
 {
     /** @test */
     public function it_can_determine_if_a_github_user_is_sponsored_by_someone()
@@ -74,13 +74,13 @@ class SponsorsTest extends TestCase
         );
     }
 
-    private function client(): Sponsors
+    private function client(): GitHubSponsors
     {
-        return $this->app->make(Sponsors::class);
+        return $this->app->make(GitHubSponsors::class);
     }
 
     protected function getPackageProviders($app): array
     {
-        return [SponsorsServiceProvider::class];
+        return [GitHubSponsorsServiceProvider::class];
     }
 }

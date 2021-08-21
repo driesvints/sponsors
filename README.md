@@ -20,19 +20,19 @@ The library is PHP agnostic but provides deep integration with [Laravel](https:/
 Here's an example how you'd use it:
 
 ```php
-use Dries\Sponsors\Sponsors;
+use Dries\GitHubSponsors\GitHubSponsors;
 use GitHub\Client as GitHub;
 
 $github = new GitHub();
 $github->authenticate(getenv('GH_SPONSORS_TOKEN'), null, GitHub::AUTH_ACCESS_TOKEN);
 
-$sponsors = new Sponsors($github);
+$client = new GitHubSponsors($github);
 
 // Check if driesvints is being sponsored by nunomaduro...
-$sponsors->isSponsoredBy('driesvints', 'nunomaduro');
+$client->isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$sponsors->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
+$client->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 ## Roadmap
@@ -88,30 +88,30 @@ GH_SPONSORS_TOKEN=ghp_xxx
 
 ### Initializing the client
 
-All of this library's API calls are made from the core `Dries\Sponsors\Sponsors` client. The client makes use of the [PHP GitHub API](https://github.com/KnpLabs/php-github-api) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
+All of this library's API calls are made from the core `Dries\GitHubSponsors\GitHubSponsors` client. The client makes use of the [PHP GitHub API](https://github.com/KnpLabs/php-github-api) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
 
 To get started, initialize the GitHub API client, authenticate using the token (preferable through an environment variable) and initialize the Sponsors client:
 
 ```php
-use Dries\Sponsors\Sponsors;
+use Dries\GitHubSponsors\GitHubSponsors;
 use GitHub\Client as GitHub;
 
 $github = new GitHub();
 $github->authenticate(getenv('GH_SPONSORS_TOKEN'), null, GitHub::AUTH_ACCESS_TOKEN);
 
-$sponsors = new Sponsors($github);
+$client = new GitHubSponsors($github);
 ```
 
-This will be the client we'll use throughout the rest of these docs. We'll re-use the `$sponsors` variable in the below examples.
+This will be the client we'll use throughout the rest of these docs. We'll re-use the `$client` variable in the below examples.
 
 ### Initializing the client using Laravel
 
 If you're using Laravel, the client is already bound to the container as a singleton. Simply retrieve it from the container:
 
 ```php
-use Dries\Sponsors\Sponsors;
+use Dries\GitHubSponsors\GitHubSponsors;
 
-$sponsors = app(Sponsors::class);
+$client = app(GitHubSponsors::class);
 ```
 
 The client was authenticated with the env variable you've set in your `.env` file.
@@ -122,10 +122,10 @@ At its core, this library allows you to easily check wether a specific user or o
 
 ```php
 // Check if driesvints is being sponsored by nunomaduro...
-$sponsors->isSponsoredBy('driesvints', 'nunomaduro');
+$client->isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$sponsors->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
+$client->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 These are all simply boolean checks. Note that while we need to know beforehand if the account the check is happening on is a regular GitHub user or a GitHub organization, we do not need to know if the sponsor is a user or an organization.
@@ -136,30 +136,30 @@ You can also perform these checks from the point-of-view of the user that was us
 
 ```php
 // Is the current authed user sponsoring driesvints?
-$sponsors->isViewerSponsoring('driesvints');
+$client->isViewerSponsoring('driesvints');
 
 // Is the current authed user sponsoring the laravel organization?
-$sponsors->isViewerSponsoringOrganization('laravel');
+$client->isViewerSponsoringOrganization('laravel');
 
 // Is the current authed user sponsored by driesvints?
-$sponsors->isViewerSponsoredBy('driesvints');
+$client->isViewerSponsoredBy('driesvints');
 
 // Is the current authed user sponsored by the laravel organization?
-$sponsors->isViewerSponsoredByOrganization('laravel');
+$client->isViewerSponsoredByOrganization('laravel');
 ```
 
 This is a bit the reverse of the examples above this section. Because of a limitation on the GitHub GraphQL API, you'll always need to know beforehand if the target is a regular user account or an organization.
 
 ### Checking Sponsorships with a Facade
 
-If you use Laravel you can also make use of the shipped `Sponsors` facade:
+If you use Laravel you can also make use of the shipped `GitHubSponsors` facade:
 
 ```php
 // Check if driesvints is being sponsored by nunomaduro...
-Sponsors::isSponsoredBy('driesvints', 'nunomaduro');
+GitHubSponsors::isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-Sponsors::isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
+GitHubSponsors::isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 ### Sponsorable Behavior
@@ -171,7 +171,7 @@ PHP GitHub Sponsors ships with a `Sponsorable` trait that can add sponsorable be
 To get started, add the trait to any object you want to use it on and set the user's GitHub username and their personal access token:
 
 ```php
-use Dries\Sponsors\Concerns\Sponsorable;
+use Dries\GitHubSponsors\Concerns\Sponsorable;
 
 class User
 {
@@ -213,7 +213,7 @@ $user->isSponsoringOrganization('spatie');
 If your sponsorable is an Eloquent model from Laravel, the setup differs a bit:
 
 ```php
-use Dries\Sponsors\Concerns\Sponsorable;
+use Dries\GitHubSponsors\Concerns\Sponsorable;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model;
@@ -242,7 +242,7 @@ $user->isSponsoredBy('nunomaduro');
 If you want to customize the `$github` & `$github_token` property names you'll also need to update their getters:
 
 ```php
-use Dries\Sponsors\Concerns\Sponsorable;
+use Dries\GitHubSponsors\Concerns\Sponsorable;
 
 class User
 {
@@ -270,7 +270,7 @@ class User
 If, instead of a user, you want to use the `Sponsorable` trait on an organization, you'll need to identify the sponsorable as such:
 
 ```php
-use Dries\Sponsors\Concerns\Sponsorable;
+use Dries\GitHubSponsors\Concerns\Sponsorable;
 
 class Organization
 {
@@ -292,21 +292,21 @@ class Organization
 When providing the sponsorable with a token, it'll initialize a new GitHub client. You may also provide [the pre-set client](#initializing-the-client) if you wish:
 
 ```php
-use Dries\Sponsors\Concerns\Sponsorable;
-use Dries\Sponsors\Sponsors;
+use Dries\GitHubSponsors\Concerns\Sponsorable;
+use Dries\GitHubSponsors\GitHubSponsors;
 
 class User
 {
     use Sponsorable;
 
     public function __construct(
-        private Sponsors $sponsors,
+        private GitHubSponsors $client,
         private string $github
     ) {}
 
-    protected function sponsorsClient(): Sponsors
+    protected function sponsorsClient(): GitHubSponsors
     {
-        return $this->sponsors;
+        return $this->client;
     }
 }
 ```

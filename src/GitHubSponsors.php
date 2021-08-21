@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dries\Sponsors;
+namespace Dries\GitHubSponsors;
 
 use Github\Client as GitHub;
 
-final class Sponsors
+final class GitHubSponsors
 {
     public function __construct(
         private GitHub $github

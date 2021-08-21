@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dries\Sponsors\Concerns;
+namespace Dries\GitHubSponsors\Concerns;
 
-use Dries\Sponsors\Sponsors;
+use Dries\GitHubSponsors\GitHubSponsors;
 use Github\Client as GitHub;
 
 trait Sponsorable
@@ -78,16 +78,16 @@ trait Sponsorable
         return ! $this->isGitHubOrganization() && $this->hasGitHubToken();
     }
 
-    protected function sponsorsClient(): Sponsors
+    protected function sponsorsClient(): GitHubSponsors
     {
         if (! $this->hasGitHubToken()) {
-            return app(Sponsors::class);
+            return app(GitHubSponsors::class);
         }
 
         $client = new GitHub();
 
         $client->authenticate($this->gitHubToken(), null, GitHub::AUTH_ACCESS_TOKEN);
 
-        return new Sponsors($client);
+        return new GitHubSponsors($client);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Dries\Sponsors\SponsorsServiceProvider;
+use Dries\GitHubSponsors\GitHubSponsorsServiceProvider;
 use Orchestra\Testbench\TestCase;
 use Tests\Fixtures\Account;
 
@@ -86,6 +86,6 @@ class SponsorableTest extends TestCase
 
     protected function getPackageProviders($app): array
     {
-        return [SponsorsServiceProvider::class];
+        return [GitHubSponsorsServiceProvider::class];
     }
 }
