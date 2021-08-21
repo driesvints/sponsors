@@ -305,6 +305,72 @@ class User
 }
 ```
 
+## Tutorials
+
+### Usage in Laravel Policies
+
+PHP GitHub Sponsors is an ideal way to grant your users access to certain resources in your app. Therefor, it's also an ideal candidate for a Laravel policy. For example, you could write a policy that grants access to a product when a user is sponsoring you.
+
+First, you'll have to set [the `GH_SPONSORS_TOKEN` in your `.env` file](#initializing-the-client-using-laravel). This token needs to be created by the user that's being sponsored or a user that is a member of the organization that's being sponsored. Then, the `GitHubSponsors` client will be authenticated with this token.
+
+Next, you'll need to [add the `Sponsorable` trait to your `User` model](#using-the-sponsorable-trait-with-eloquent). Additionally, you'll need to make sure that the `users` database has a `github` column (`VARCHAR(255)`) and all users have their GitHub usernames filled out.
+
+Then, we'll write out policy. Let's say that we're creating this policy for Spatie:
+
+```php
+<?php
+
+namespace App\Policies;
+
+use App\Models\User;
+
+class ProductPolicy
+{
+    /**
+     * Determine if a product can be reached by the user.
+     *
+     * @param  \App\Models\User  $user
+     * @return bool
+     */
+    public function view(User $user)
+    {
+        return $user->isSponsoringOrganization('spatie');
+    }
+}
+```
+
+We wire up the policy in the `AuthServiceProvider` of our app:
+
+```php
+use App\Models\Product;
+use App\Policies\ProductPolicy;
+
+/**
+ * The policy mappings for the application.
+ *
+ * @var array
+ */
+protected $policies = [
+    Product::class => ProductPolicy::class,
+];
+```
+
+And now we can use the policy to do ACL checks to see if the authenticated user can access Spatie's products:
+
+```blade
+@can('view', App\Models\Product)
+    <a href="{{ route('products') }}">
+        View Products
+    </a>
+@else
+    <a href="https://github.com/sponsors/spatie">
+        Sponsor us to use our products!
+    </a> 
+@endcan
+```
+
+And that's it. Of course, you'd probably also want to protect any controller giving access to the `products` route.
+
 ## FAQ
 
 ### Why are there separate organization methods?
