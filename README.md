@@ -358,7 +358,7 @@ protected $policies = [
 And now we can use the policy to do ACL checks to see if the authenticated user can access Spatie's products:
 
 ```blade
-@can('view', App\Models\Product)
+@can('view', App\Models\Product::class)
     <a href="{{ route('products') }}">
         View Products
     </a>
