@@ -12,14 +12,8 @@ final class Account
 
     public function __construct(
         public string $github,
-        public ?string $token,
-        public bool $isOrganization
+        public ?string $token = null
     ) {
-    }
-
-    public function isGitHubOrganization(): bool
-    {
-        return $this->isOrganization;
     }
 
     public function gitHubToken(): ?string

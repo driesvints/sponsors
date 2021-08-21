@@ -37,7 +37,7 @@ class PrivateSponsorsTest extends TestCase
     public function sponsorables_can_check_if_they_are_privately_sponsored_by_an_organization()
     {
         $this->assertTrue(
-            $this->sponsorable('driesvints')->isSponsoredByOrganization('laravelio')
+            $this->sponsorable('driesvints')->isSponsoredBy('laravelio')
         );
     }
 
@@ -45,7 +45,7 @@ class PrivateSponsorsTest extends TestCase
     public function sponsorables_can_check_if_they_are_privately_sponsoring_an_organization()
     {
         $this->assertTrue(
-            $this->sponsorable('driesvints')->isSponsoringOrganization('laravelio')
+            $this->sponsorable('driesvints')->isSponsoring('laravelio')
         );
     }
 
@@ -53,7 +53,7 @@ class PrivateSponsorsTest extends TestCase
     public function organizations_can_check_if_they_are_privately_sponsored_by_someone()
     {
         $this->assertTrue(
-            $this->organization('laravelio')->isSponsoredBy('driesvints')
+            $this->sponsorable('laravelio')->isSponsoredBy('driesvints')
         );
     }
 
@@ -61,7 +61,7 @@ class PrivateSponsorsTest extends TestCase
     public function organizations_can_check_if_they_are_privately_sponsoring_someone()
     {
         $this->assertTrue(
-            $this->organization('laravelio')->isSponsoring('driesvints')
+            $this->sponsorable('laravelio')->isSponsoring('driesvints')
         );
     }
 
@@ -69,7 +69,7 @@ class PrivateSponsorsTest extends TestCase
     public function organizations_can_check_if_they_are_privately_sponsored_by_another_organization()
     {
         $this->assertTrue(
-            $this->organization('laravelio')->isSponsoredByOrganization('spatie')
+            $this->sponsorable('laravelio')->isSponsoredBy('spatie')
         );
     }
 
@@ -77,17 +77,12 @@ class PrivateSponsorsTest extends TestCase
     public function organizations_can_check_if_they_are_privately_sponsoring_another_organization()
     {
         $this->assertTrue(
-            $this->organization('laravelio')->isSponsoringOrganization('spatie')
+            $this->sponsorable('laravelio')->isSponsoring('spatie')
         );
     }
 
-    protected function sponsorable(string $username, bool $isOrganization = false): Account
+    protected function sponsorable(string $username): Account
     {
-        return new Account($username, getenv('GH_SPONSORS_TOKEN'), $isOrganization);
-    }
-
-    protected function organization(string $username): Account
-    {
-        return $this->sponsorable($username, true);
+        return new Account($username, getenv('GH_SPONSORS_TOKEN'));
     }
 }

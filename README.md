@@ -29,7 +29,7 @@ $client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
 $client->isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$client->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
+$client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 ## Roadmap
@@ -119,10 +119,8 @@ At its core, this library allows you to easily check wether a specific user or o
 $client->isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$client->isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
+$client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
-
-These are all simply boolean checks. Note that while we need to know beforehand if the account the check is happening on is a regular GitHub user or a GitHub organization, we do not need to know if the sponsor is a user or an organization.
 
 ### Checking Sponsorships as a Viewer
 
@@ -133,16 +131,16 @@ You can also perform these checks from the point-of-view of the user that was us
 $client->isViewerSponsoring('driesvints');
 
 // Is the current authed user sponsoring the laravel organization?
-$client->isViewerSponsoringOrganization('laravel');
+$client->isViewerSponsoring('laravel');
 
 // Is the current authed user sponsored by driesvints?
 $client->isViewerSponsoredBy('driesvints');
 
 // Is the current authed user sponsored by the laravel organization?
-$client->isViewerSponsoredByOrganization('laravel');
+$client->isViewerSponsoredBy('laravel');
 ```
 
-This is a bit the reverse of the examples above this section. Because of a limitation on the GitHub GraphQL API, you'll always need to know beforehand if the target is a regular user account or an organization.
+You might be wondering why we're using the "Viewer" wording here. "Viewer" is also a concept in the GraphQL API of GitHub. It represents the currently authenticated user that's performing the API requests. That's why we've decided to also use this terminology in the package's API.
 
 ### Checking Sponsorships with a Facade
 
@@ -153,7 +151,7 @@ If you use Laravel you can also make use of the shipped `GitHubSponsors` facade:
 GitHubSponsors::isSponsoredBy('driesvints', 'nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-GitHubSponsors::isOrganizationSponsoredBy('blade-ui-kit', 'nunomaduro');
+GitHubSponsors::isSponsoredBy('blade-ui-kit', 'nunomaduro');
 ```
 
 ### Sponsorable Behavior
@@ -192,14 +190,14 @@ $user = new User('driesvints', getenv('GH_SPONSORS_TOKEN'));
 // Check if driesvints is being sponsored by nunomaduro...
 $user->isSponsoredBy('nunomaduro');
 
-// Check if driesvints is being sponsored by blade-ui-kit...
-$user->isSponsoredByOrganization('blade-ui-kit');
+// Check if driesvints is being sponsored by the blade-ui-kit organization...
+$user->isSponsoredBy('blade-ui-kit');
 
 // Check if driesvints is sponsoring nunomaduro...
 $user->isSponsoring('nunomaduro');
 
 // Check if driesvints is sponsoring spatie...
-$user->isSponsoringOrganization('spatie');
+$user->isSponsoring('spatie');
 ```
 
 #### Using the `Sponsorable` trait with Eloquent
@@ -259,28 +257,6 @@ class User
 }
 ```
 
-#### Organization Sponsorables
-
-If, instead of a user, you want to use the `Sponsorable` trait on an organization, you'll need to identify the sponsorable as such:
-
-```php
-use Dries\GitHubSponsors\Concerns\Sponsorable;
-
-class Organization
-{
-    use Sponsorable;
-
-    // ...
-
-    public function isGitHubOrganization(): bool
-    {
-        return true;
-    }
-}
-```
-
-> ⚠️ It is important that the organization is provided with a personal access token of a GitHub user that has access to the organization.
-
 #### Customizing the Sponsorable client
 
 When providing the sponsorable with a token, it'll initialize a new GitHub client. You may also provide [the pre-set client](#initializing-the-client) if you wish:
@@ -334,7 +310,7 @@ class ProductPolicy
      */
     public function view(User $user)
     {
-        return $user->isSponsoringOrganization('spatie');
+        return $user->isSponsoring('spatie');
     }
 }
 ```
@@ -373,19 +349,13 @@ And that's it. Of course, you'd probably also want to protect any controller giv
 
 ## FAQ
 
-### Why are there separate organization methods?
-
-The GitHub GraphQL API was designed in a way that there's a differentation between user accounts and organization accounts. Because we need to be able to perform sponsorship checks on both of them we both need to use [the `user` query](https://docs.github.com/en/graphql/reference/queries#user) as well as [the `organization` query](https://docs.github.com/en/graphql/reference/queries#organization). Therefor, we need to know beforehand if the entity we're doing the sponsorship check against is either a user or an organization.
-
-### Why is the `Viewer` keyword necessary in some of the methods?
-
-"Viewer" is also a concept in the GraphQL API of GitHub. It represents the currently authenticated user that's performing the API requests. That's why I've decided to also use this terminology in the package's API.
-
 ### Why is the sponsorship check returning `false` for private sponsorship checks?
 
 The way the GitHub GraphQL mostly works is [through personal access tokens](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql). Because these tokens are always created from a specific user in GitHub, the API calls will return results based on the visibility of the user and their access to the target resource.
 
 For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `isSponsoredBy('driesvints', 'spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `isSponsoredBy('nunomaduro', 'spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account. 
+
+It is also important that if you're checking against organizations that you're using a token of a user that is a member of the organization. Any other GitHub user will not have access to check private sponsorships for that organization.
 
 Public sponsorships will always be visible though, regardless on which user the token was created.
 

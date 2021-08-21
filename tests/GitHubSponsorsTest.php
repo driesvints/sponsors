@@ -22,7 +22,7 @@ class GitHubSponsorsTest extends TestCase
     public function it_can_determine_if_a_github_organization_is_sponsored_by_someone()
     {
         $this->assertTrue(
-            $this->client()->isOrganizationSponsoredBy('laravelio', 'nunomaduro')
+            $this->client()->isSponsoredBy('laravelio', 'nunomaduro')
         );
     }
 
@@ -38,7 +38,7 @@ class GitHubSponsorsTest extends TestCase
     public function it_can_determine_if_a_github_organization_is_sponsoring_another_organization()
     {
         $this->assertTrue(
-            $this->client()->isOrganizationSponsoredBy('laravelio', 'akaunting')
+            $this->client()->isSponsoredBy('laravelio', 'akaunting')
         );
     }
 
@@ -54,7 +54,7 @@ class GitHubSponsorsTest extends TestCase
     public function it_can_determine_if_the_authed_account_is_sponsoring_an_organization()
     {
         $this->assertTrue(
-            $this->client()->isViewerSponsoringOrganization('Homebrew')
+            $this->client()->isViewerSponsoring('Homebrew')
         );
     }
 
@@ -70,7 +70,7 @@ class GitHubSponsorsTest extends TestCase
     public function it_can_determine_if_the_authed_account_is_sponsored_by_an_organization()
     {
         $this->assertTrue(
-            $this->client()->isViewerSponsoredByOrganization('kontentino')
+            $this->client()->isViewerSponsoredBy('kontentino')
         );
     }
 
