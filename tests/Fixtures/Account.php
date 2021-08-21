@@ -14,7 +14,8 @@ final class Account
         public string $github,
         public ?string $token,
         public bool $isOrganization
-    ) {}
+    ) {
+    }
 
     public function isGitHubOrganization(): bool
     {

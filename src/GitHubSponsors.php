@@ -13,7 +13,8 @@ final class GitHubSponsors
     public function __construct(
         private Factory $http,
         private string $token
-    ) {}
+    ) {
+    }
 
     public function isSponsoredBy(string $account, string $sponsor, bool $isAccountAnOrganization = false): bool
     {
