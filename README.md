@@ -1,16 +1,16 @@
 # PHP GitHub Sponsors
 
-<a href="https://github.com/driesvints/php-github-sponsors/actions?query=workflow%3ATests">
-    <img src="https://github.com/driesvints/php-github-sponsors/workflows/Tests/badge.svg" alt="Tests">
+<a href="https://github.com/github-php/sponsors/actions?query=workflow%3ATests">
+    <img src="https://github.com/github-php/sponsors/workflows/Tests/badge.svg" alt="Tests">
 </a>
 <a href="https://github.styleci.io/repos/371488434">
     <img src="https://github.styleci.io/repos/371488434/shield?style=flat" alt="Code Style">
 </a>
-<a href="https://packagist.org/packages/driesvints/php-github-sponsors">
-    <img src="https://img.shields.io/packagist/v/driesvints/php-github-sponsors" alt="Latest Stable Version">
+<a href="https://packagist.org/packages/github-php/sponsors">
+    <img src="https://img.shields.io/packagist/v/github-php/sponsors" alt="Latest Stable Version">
 </a>
-<a href="https://packagist.org/packages/driesvints/php-github-sponsors">
-    <img src="https://img.shields.io/packagist/driesvints/php-github-sponsors" alt="Total Downloads">
+<a href="https://packagist.org/packages/github-php/sponsors">
+    <img src="https://img.shields.io/packagist/github-php/sponsors" alt="Total Downloads">
 </a>
 
 PHP GitHub Sponsors is a package that integrates directly with [the GitHub Sponsors GraphQL API](https://docs.github.com/en/sponsors/integrating-with-github-sponsors/getting-started-with-the-sponsors-graphql-api). Using it, you can easily check if a GitHub account is sponsoring another account. This helps you implement powerful ACL capibilities in your application and the ability to grant users access to specific resources when they sponsor you.
@@ -36,15 +36,15 @@ $client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
 
 Here's some of the features on our roadmap. We'd always appreciate PR's to kickstart these.
 
-- [Caching](https://github.com/driesvints/php-github-sponsors/issues/1)
-- [Retrieve sponsorships](https://github.com/driesvints/php-github-sponsors/issues/2)
-- [Check sponsorship tiers](https://github.com/driesvints/php-github-sponsors/issues/3)
-- [Create new Sponsorships](https://github.com/driesvints/php-github-sponsors/issues/5)
-- [Automatically grant and revoke perks](https://github.com/driesvints/php-github-sponsors/issues/7)
-- [Sync sponsorships through GitHub webhooks](https://github.com/driesvints/php-github-sponsors/issues/6)
-- [Track sponsored amounts](https://github.com/driesvints/php-github-sponsors/issues/8)
+- [Caching](https://github.com/github-php/sponsors/issues/1)
+- [Retrieve sponsorships](https://github.com/github-php/sponsors/issues/2)
+- [Check sponsorship tiers](https://github.com/github-php/sponsors/issues/3)
+- [Create new Sponsorships](https://github.com/github-php/sponsors/issues/5)
+- [Automatically grant and revoke perks](https://github.com/github-php/sponsors/issues/7)
+- [Sync sponsorships through GitHub webhooks](https://github.com/github-php/sponsors/issues/6)
+- [Track sponsored amounts](https://github.com/github-php/sponsors/issues/8)
 
-Not seeing the feature you seek? Consider opening up [an issue](https://github.com/driesvints/php-github-sponsors/issues).
+Not seeing the feature you seek? Consider opening up [an issue](https://github.com/github-php/sponsors/issues).
 
 ## Requirements
 
@@ -56,7 +56,7 @@ Not seeing the feature you seek? Consider opening up [an issue](https://github.c
 Install the package with composer:
 
 ```bash
-composer require driesvints/php-github-sponsors
+composer require github-php/sponsors
 ```
 
 ## Updating

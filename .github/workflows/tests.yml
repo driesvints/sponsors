@@ -40,7 +40,7 @@ jobs:
           GH_SPONSORS_TOKEN: ${{ secrets.GH_SPONSORS_TOKEN }}
 
       - name: Execute private sponsors tests
-        if: github.repository == 'driesvints/php-github-sponsors'
+        if: github.repository == 'github-php/sponsors'
         run: vendor/bin/phpunit tests/PrivateSponsorsTest.php --verbose
         env:
           GH_SPONSORS_TOKEN: ${{ secrets.GH_SPONSORS_TOKEN }}
