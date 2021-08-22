@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Fixtures;
 
-use Dries\GitHubSponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Concerns\Sponsorable;
 
 final class Account
 {

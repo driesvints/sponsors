@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dries\GitHubSponsors;
+namespace GitHub\Sponsors;
 
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\ServiceProvider;

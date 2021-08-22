@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Dries\GitHubSponsors\GitHubSponsors;
-use Dries\GitHubSponsors\GitHubSponsorsServiceProvider;
+use GitHub\Sponsors\GitHubSponsors;
+use GitHub\Sponsors\GitHubSponsorsServiceProvider;
 use Orchestra\Testbench\TestCase;
 
 class GitHubSponsorsTest extends TestCase

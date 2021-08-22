@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dries\GitHubSponsors\Concerns;
+namespace GitHub\Sponsors\Concerns;
 
-use Dries\GitHubSponsors\GitHubSponsors;
+use GitHub\Sponsors\GitHubSponsors;
 use Illuminate\Http\Client\Factory;
 
 trait Sponsorable

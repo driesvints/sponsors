@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dries\GitHubSponsors\Exceptions;
+namespace GitHub\Sponsors\Exceptions;
 
 use Exception;
 use Illuminate\Http\Client\Response;

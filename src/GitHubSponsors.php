@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Dries\GitHubSponsors;
+namespace GitHub\Sponsors;
 
-use Dries\GitHubSponsors\Exceptions\BadCredentialsException;
-use Dries\GitHubSponsors\Exceptions\QueryException;
+use GitHub\Sponsors\Exceptions\BadCredentialsException;
+use GitHub\Sponsors\Exceptions\QueryException;
 use Illuminate\Http\Client\Factory;
 
 final class GitHubSponsors

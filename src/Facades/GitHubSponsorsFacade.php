@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dries\GitHubSponsors\Facades;
+namespace GitHub\Sponsors\Facades;
 
-use Dries\GitHubSponsors\GitHubSponsors;
+use GitHub\Sponsors\GitHubSponsors;
 use Illuminate\Support\Facades\Facade;
 
 final class GitHubSponsorsFacade extends Facade

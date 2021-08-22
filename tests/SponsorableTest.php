@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Dries\GitHubSponsors\GitHubSponsorsServiceProvider;
+use GitHub\Sponsors\GitHubSponsorsServiceProvider;
 use Orchestra\Testbench\TestCase;
 use Tests\Fixtures\Account;
 

@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Dries\\GitHubSponsors\\": "src"
+            "GitHub\\Sponsors\\": "src"
         }
     },
     "autoload-dev": {
@@ -35,10 +35,10 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "GitHubSponsors": "Dries\\GitHubSponsors\\Facades\\GitHubSponsorsFacade"
+                "GitHubSponsors": "GitHub\\Sponsors\\Facades\\GitHubSponsorsFacade"
             },
             "providers": [
-                "Dries\\GitHubSponsors\\GitHubSponsorsServiceProvider"
+                "GitHub\\Sponsors\\GitHubSponsorsServiceProvider"
             ]
         }
     },

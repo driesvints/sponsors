@@ -20,7 +20,7 @@ The library is PHP agnostic but provides deep integration with [Laravel](https:/
 Here's an example how you'd use it:
 
 ```php
-use Dries\GitHubSponsors\GitHubSponsors;
+use GitHub\Sponsors\GitHubSponsors;
 use Illuminate\Http\Client\Factory;
 
 $client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
@@ -85,12 +85,12 @@ GH_SPONSORS_TOKEN=ghp_xxx
 
 ### Initializing the client
 
-All of this library's API calls are made from the core `Dries\GitHubSponsors\GitHubSponsors` client. The client makes use of the [Illuminate HTTP Client](https://laravel.com/docs/http-client) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
+All of this library's API calls are made from the core `GitHub\Sponsors\GitHubSponsors` client. The client makes use of the [Illuminate HTTP Client](https://laravel.com/docs/http-client) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
 
 To get started, initialize the GitHub API client, authenticate using the token (preferable through an environment variable) and initialize the Sponsors client:
 
 ```php
-use Dries\GitHubSponsors\GitHubSponsors;
+use GitHub\Sponsors\GitHubSponsors;
 use Illuminate\Http\Client\Factory;
 
 $client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
@@ -103,7 +103,7 @@ This will be the client we'll use throughout the rest of these docs. We'll re-us
 If you're using Laravel, the client is already bound to the container as a singleton. Simply retrieve it from the container:
 
 ```php
-use Dries\GitHubSponsors\GitHubSponsors;
+use GitHub\Sponsors\GitHubSponsors;
 
 $client = app(GitHubSponsors::class);
 ```
@@ -163,7 +163,7 @@ PHP GitHub Sponsors ships with a `Sponsorable` trait that can add sponsorable be
 To get started, add the trait to any object you want to use it on and set the user's GitHub username and their personal access token:
 
 ```php
-use Dries\GitHubSponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Concerns\Sponsorable;
 
 class User
 {
@@ -205,7 +205,7 @@ $user->isSponsoring('spatie');
 If your sponsorable is an Eloquent model from Laravel, the setup differs a bit:
 
 ```php
-use Dries\GitHubSponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Concerns\Sponsorable;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model;
@@ -234,7 +234,7 @@ $user->isSponsoredBy('nunomaduro');
 If you want to customize the `$github` & `$github_token` property names you'll also need to update their getters:
 
 ```php
-use Dries\GitHubSponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Concerns\Sponsorable;
 
 class User
 {
@@ -262,8 +262,8 @@ class User
 When providing the sponsorable with a token, it'll initialize a new GitHub client. You may also provide [the pre-set client](#initializing-the-client) if you wish:
 
 ```php
-use Dries\GitHubSponsors\Concerns\Sponsorable;
-use Dries\GitHubSponsors\GitHubSponsors;
+use GitHub\Sponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\GitHubSponsors;
 
 class User
 {
