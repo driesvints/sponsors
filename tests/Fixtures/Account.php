@@ -10,10 +10,14 @@ final class Account
 {
     use Sponsorable;
 
-    public function __construct(
-        public string $github,
-        public ?string $token = null
-    ) {
+    public string $github;
+
+    public ?string $token = null;
+
+    public function __construct(string $github, ?string $token = null)
+    {
+        $this->github = $github;
+        $this->token = $token;
     }
 
     public function gitHubToken(): ?string

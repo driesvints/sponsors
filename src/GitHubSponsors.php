@@ -10,10 +10,14 @@ use Illuminate\Http\Client\Factory;
 
 final class GitHubSponsors
 {
-    public function __construct(
-        private Factory $http,
-        private string $token
-    ) {
+    private Factory $http;
+
+    private string $token;
+
+    public function __construct(Factory $http, string $token)
+    {
+        $this->http = $http;
+        $this->token = $token;
     }
 
     public function isSponsoredBy(string $account, string $sponsor): bool

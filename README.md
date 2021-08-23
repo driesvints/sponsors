@@ -48,7 +48,7 @@ Not seeing the feature you seek? Consider opening up [an issue](https://github.c
 
 ## Requirements
 
-- PHP 8.0 or higher
+- PHP 7.4 or higher
 - Laravel 8.0 or higher (optional when using Laravel)
 
 ## Installation
@@ -169,10 +169,15 @@ class User
 {
     use Sponsorable;
 
-    public function __construct(
-        private string $github,
-        private string $github_token
-    ) {}
+    private string $github;
+
+    private string $github_token;
+
+    public function __construct(string $github, string $github_token)
+    {
+        $this->github = $github;
+        $this->github_token = $github_token;
+    }
 }
 ```
 
@@ -240,10 +245,15 @@ class User
 {
     use Sponsorable;
 
-    public function __construct(
-        private string $gitHubUsername,
-        private string $gitHubToken
-    ) {}
+    private string $gitHubUsername;
+
+    private string $gitHubToken;
+
+    public function __construct(string $gitHubUsername, string $gitHubToken)
+    {
+        $this->gitHubUsername = $gitHubUsername;
+        $this->gitHubToken = $gitHubToken;
+    }
 
     public function gitHubUsername(): string
     {
@@ -269,10 +279,15 @@ class User
 {
     use Sponsorable;
 
-    public function __construct(
-        private GitHubSponsors $client,
-        private string $github
-    ) {}
+    private GitHubSponsors $client;
+
+    private string $github;
+
+    public function __construct(GitHubSponsors $client, string $github)
+    {
+        $this->client = $client;
+        $this->github = $github;
+    }
 
     protected function sponsorsClient(): GitHubSponsors
     {
