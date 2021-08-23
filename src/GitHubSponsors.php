@@ -95,11 +95,11 @@ final class GitHubSponsors
             ]);
 
         if ($response->status() === 401) {
-            throw BadCredentialsException::fromHttpResponse($response);
+            throw BadCredentialsException::badToken();
         }
 
         if ($response->clientError()) {
-            throw QueryException::fromHttpResponse($response);
+            throw QueryException::badQuery();
         }
 
         return $response->json('data');
