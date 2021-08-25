@@ -384,7 +384,7 @@ Check out the [CHANGELOG](CHANGELOG.md) in this repository for all the recent ch
 
 ## Maintainers
 
-PHP GitHub Sponsors is developed and maintained by [Dries Vints](https://driesvints.com).
+PHP GitHub Sponsors is developed and maintained by [Dries Vints](https://driesvints.com) and [Tom Witkowski](https://gummibeer.dev).
 
 ## License
 

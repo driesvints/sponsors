@@ -11,6 +11,10 @@
         {
             "name": "Dries Vints",
             "homepage": "https://driesvints.com"
+        },
+        {
+            "name": "Tom Witkowski",
+            "homepage": "https://gummibeer.dev"
         }
     ],
     "require": {
