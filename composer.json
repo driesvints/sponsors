@@ -1,6 +1,6 @@
 {
     "name": "github-php/sponsors",
-    "description": "A package for PHP to work with GitHub Sponsors.",
+    "description": "A package for PHP to interact with GitHub Sponsors.",
     "keywords": ["GitHub", "Sponsors", "Laravel"],
     "license": "MIT",
     "support": {
