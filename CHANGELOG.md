@@ -6,6 +6,6 @@ This changelog follows [the Keep a Changelog standard](https://keepachangelog.co
 ## [Unreleased](https://github.com/github-php/sponsors/compare/0.1.0...main)
 
 
-## 0.1.0 (2021-08-15)
+## 0.1.0 (2021-08-25)
 
 Initial release.
