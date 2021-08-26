@@ -2,9 +2,7 @@
 
 namespace GitHub\Sponsors\Clients;
 
-use BadMethodCallException;
 use GitHub\Sponsors\Contracts\Client;
-use GitHub\Sponsors\ClientFactory;
 use GitHub\Sponsors\GraphqlClient;
 
 final class LoginClient implements Client

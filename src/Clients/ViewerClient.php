@@ -3,7 +3,6 @@
 namespace GitHub\Sponsors\Clients;
 
 use GitHub\Sponsors\Contracts\Client;
-use GitHub\Sponsors\ClientFactory;
 use GitHub\Sponsors\GraphqlClient;
 
 final class ViewerClient implements Client

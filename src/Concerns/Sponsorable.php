@@ -6,7 +6,6 @@ namespace GitHub\Sponsors\Concerns;
 
 use GitHub\Sponsors\ClientFactory;
 use GitHub\Sponsors\Clients\LoginClient;
-use Illuminate\Http\Client\Factory;
 
 trait Sponsorable
 {

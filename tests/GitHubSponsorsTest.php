@@ -14,7 +14,7 @@ class GitHubSponsorsTest extends TestCase
     public function it_can_determine_if_a_github_user_is_sponsored_by_someone()
     {
         $this->assertTrue(
-            $this->client()->login('driesvints')->isSponsoredBy( 'nunomaduro')
+            $this->client()->login('driesvints')->isSponsoredBy('nunomaduro')
         );
     }
 

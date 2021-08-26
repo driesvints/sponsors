@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace GitHub\Sponsors;
 
-use Illuminate\Http\Client\Factory;
 use Illuminate\Support\ServiceProvider;
 
 final class GitHubSponsorsServiceProvider extends ServiceProvider
