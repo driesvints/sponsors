@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GitHub\Sponsors\Clients;
 
 use GitHub\Sponsors\Contracts\Sponsorable;
