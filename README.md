@@ -281,6 +281,7 @@ class User implements SponsorableContract
 When providing the sponsorable with a token, it'll initialize a new GitHub client. You may also provide [the pre-set client](#initializing-the-client) if you wish:
 
 ```php
+use GitHub\Sponsors\Client;
 use GitHub\Sponsors\Concerns\Sponsorable;
 use GitHub\Sponsors\Clients\Login;
 use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
@@ -289,11 +290,11 @@ class User implements SponsorableContract
 {
     use Sponsorable;
 
-    private Login $client;
+    private Client $client;
 
     private string $github;
 
-    public function __construct(Login $client, string $github)
+    public function __construct(Client $client, string $github)
     {
         $this->client = $client;
         $this->github = $github;
@@ -301,7 +302,7 @@ class User implements SponsorableContract
 
     protected function sponsorsClient(): Login
     {
-        return $this->client;
+        return $this->client->login($this->gitHubUsername());
     }
 }
 ```
