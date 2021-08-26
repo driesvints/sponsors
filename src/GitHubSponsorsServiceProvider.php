@@ -12,8 +12,8 @@ final class GitHubSponsorsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/github-sponsors.php', 'github-sponsors');
 
-        $this->app->singleton(ClientFactory::class, function () {
-            return new ClientFactory(config('github-sponsors.token'));
+        $this->app->singleton(Client::class, function () {
+            return new Client(config('github-sponsors.token'));
         });
     }
 

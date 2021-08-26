@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Tests\Fixtures;
 
 use GitHub\Sponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
 
-final class Account
+final class Account implements SponsorableContract
 {
     use Sponsorable;
 

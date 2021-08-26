@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace GitHub\Sponsors\Concerns;
 
-use GitHub\Sponsors\ClientFactory;
-use GitHub\Sponsors\Clients\LoginClient;
+use GitHub\Sponsors\Client;
+use GitHub\Sponsors\Clients\Login;
 
 trait Sponsorable
 {
@@ -36,11 +36,11 @@ trait Sponsorable
         return $this->gitHubToken() !== null;
     }
 
-    protected function sponsorsClient(): LoginClient
+    protected function sponsorsClient(): Login
     {
         $factory = $this->hasGitHubToken()
-            ? new ClientFactory($this->gitHubToken())
-            : app(ClientFactory::class);
+            ? new Client($this->gitHubToken())
+            : app(Client::class);
 
         return $factory->login($this->gitHubUsername());
     }

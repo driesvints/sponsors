@@ -20,10 +20,10 @@ The library is PHP agnostic but provides deep integration with [Laravel](https:/
 Here's an example how you'd use it:
 
 ```php
-use GitHub\Sponsors\ClientFactory;
+use GitHub\Sponsors\Client;
 use Illuminate\Http\Client\Factory;
 
-$client = new ClientFactory(getenv('GH_SPONSORS_TOKEN'));
+$client = new Client(getenv('GH_SPONSORS_TOKEN'));
 
 // Check if driesvints is being sponsored by nunomaduro...
 $client->login('driesvints')->isSponsoredBy('nunomaduro');
@@ -97,10 +97,10 @@ All of this library's API calls are made from the core `GitHub\Sponsors\GitHubSp
 To get started, initialize the GitHub API client, authenticate using the token (preferable through an environment variable) and initialize the Sponsors client:
 
 ```php
-use GitHub\Sponsors\ClientFactory;
+use GitHub\Sponsors\Client;
 use Illuminate\Http\Client\Factory;
 
-$client = new ClientFactory(new Factory(), getenv('GH_SPONSORS_TOKEN'));
+$client = new Client(new Factory(), getenv('GH_SPONSORS_TOKEN'));
 ```
 
 This will be the client we'll use throughout the rest of these docs. We'll re-use the `$client` variable in the below examples.
@@ -110,9 +110,9 @@ This will be the client we'll use throughout the rest of these docs. We'll re-us
 If you're using Laravel, the client is already bound to the container as a singleton. Simply retrieve it from the container:
 
 ```php
-use GitHub\Sponsors\ClientFactory;
+use GitHub\Sponsors\Client;
 
-$client = app(ClientFactory::class);
+$client = app(Client::class);
 ```
 
 The client was authenticated with the env variable you've set in your `.env` file.
@@ -122,7 +122,7 @@ The client was authenticated with the env variable you've set in your `.env` fil
 At its core, this library allows you to easily check wether a specific user or organization is sponsoring another one:
 
 ```php
-/** @var \GitHub\Sponsors\ClientFactory $client */
+/** @var \GitHub\Sponsors\Client $client */
 
 // Check if driesvints is being sponsored by nunomaduro...
 $client->login('driesvints')->isSponsoredBy('nunomaduro');
@@ -136,7 +136,7 @@ $client->login('blade-ui-kit')->isSponsoredBy('nunomaduro');
 You can also perform these checks from the point-of-view of the user that was used to authenticate the GitHub API client. If you'll use the methods below, it would be as if you'd be browsing GitHub as the user that created the token.
 
 ```php
-/** @var \GitHub\Sponsors\ClientFactory $client */
+/** @var \GitHub\Sponsors\Client $client */
 
 // Is the current authed user sponsoring driesvints?
 $client->viewer()->isSponsoring('driesvints');
@@ -285,23 +285,23 @@ When providing the sponsorable with a token, it'll initialize a new GitHub clien
 
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
-use GitHub\Sponsors\Clients\LoginClient;
+use GitHub\Sponsors\Clients\Login;
 
 class User
 {
     use Sponsorable;
 
-    private LoginClient $client;
+    private Login $client;
 
     private string $github;
 
-    public function __construct(LoginClient $client, string $github)
+    public function __construct(Login $client, string $github)
     {
         $this->client = $client;
         $this->github = $github;
     }
 
-    protected function sponsorsClient(): LoginClient
+    protected function sponsorsClient(): Login
     {
         return $this->client;
     }

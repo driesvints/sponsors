@@ -2,10 +2,10 @@
 
 namespace GitHub\Sponsors\Clients;
 
-use GitHub\Sponsors\Contracts\Client;
+use GitHub\Sponsors\Contracts\Sponsorable;
 use GitHub\Sponsors\GraphqlClient;
 
-final class ViewerClient implements Client
+final class Viewer implements Sponsorable
 {
     private GraphqlClient $client;
 

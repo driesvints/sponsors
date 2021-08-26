@@ -2,7 +2,7 @@
 
 namespace GitHub\Sponsors\Contracts;
 
-interface Client
+interface Sponsorable
 {
     public function isSponsoredBy(string $sponsor): bool;
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use GitHub\Sponsors\ClientFactory;
+use GitHub\Sponsors\Client;
 use GitHub\Sponsors\GitHubSponsorsServiceProvider;
 use Orchestra\Testbench\TestCase;
 
-class GitHubSponsorsTest extends TestCase
+class ClientTest extends TestCase
 {
     /** @test */
     public function it_can_determine_if_a_github_user_is_sponsored_by_someone()
@@ -74,9 +74,9 @@ class GitHubSponsorsTest extends TestCase
         );
     }
 
-    private function client(): ClientFactory
+    private function client(): Client
     {
-        return $this->app->make(ClientFactory::class);
+        return $this->app->make(Client::class);
     }
 
     protected function getPackageProviders($app): array
