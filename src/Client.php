@@ -14,7 +14,7 @@ final class Client
 
     public function __construct(string $token)
     {
-        $this->graphql = new GraphqlClient(new Factory(), $token);
+        $this->graphql = new GraphqlClient($token);
     }
 
     public function viewer(): Viewer

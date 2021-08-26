@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GitHub\Sponsors;
 
 use GitHub\Sponsors\Exceptions\BadCredentialsException;
@@ -12,9 +14,9 @@ final class GraphqlClient
 
     private string $token;
 
-    public function __construct(Factory $http, string $token)
+    public function __construct(string $token, ?Factory $http = null)
     {
-        $this->http = $http;
+        $this->http = $http ?? new Factory();
         $this->token = $token;
     }
 
