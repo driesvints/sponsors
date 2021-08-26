@@ -20,16 +20,22 @@ The library is PHP agnostic but provides deep integration with [Laravel](https:/
 Here's an example how you'd use it:
 
 ```php
-use GitHub\Sponsors\GitHubSponsors;
+use GitHub\Sponsors\ClientFactory;
 use Illuminate\Http\Client\Factory;
 
-$client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
+$client = new ClientFactory(getenv('GH_SPONSORS_TOKEN'));
 
 // Check if driesvints is being sponsored by nunomaduro...
-$client->isSponsoredBy('driesvints', 'nunomaduro');
+$client->login('driesvints')->isSponsoredBy('nunomaduro');
 
-// Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
+// Check if the blade-ui-kit organization is sponsored by nunomaduro...
+$client->login('nunomaduro')->isSponsoring('blade-ui-kit');
+
+// Check if the authenticated user is sponsored by Gummibeer...
+$client->viewer()->isSponsoredBy('Gummibeer');
+
+// Check if the authenticated user is sponsoring by driesvints...
+$client->viewer()->isSponsoring('driesvints');
 ```
 
 ## Roadmap
@@ -91,10 +97,10 @@ All of this library's API calls are made from the core `GitHub\Sponsors\GitHubSp
 To get started, initialize the GitHub API client, authenticate using the token (preferable through an environment variable) and initialize the Sponsors client:
 
 ```php
-use GitHub\Sponsors\GitHubSponsors;
+use GitHub\Sponsors\ClientFactory;
 use Illuminate\Http\Client\Factory;
 
-$client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
+$client = new ClientFactory(new Factory(), getenv('GH_SPONSORS_TOKEN'));
 ```
 
 This will be the client we'll use throughout the rest of these docs. We'll re-use the `$client` variable in the below examples.
@@ -104,9 +110,9 @@ This will be the client we'll use throughout the rest of these docs. We'll re-us
 If you're using Laravel, the client is already bound to the container as a singleton. Simply retrieve it from the container:
 
 ```php
-use GitHub\Sponsors\GitHubSponsors;
+use GitHub\Sponsors\ClientFactory;
 
-$client = app(GitHubSponsors::class);
+$client = app(ClientFactory::class);
 ```
 
 The client was authenticated with the env variable you've set in your `.env` file.
@@ -116,11 +122,13 @@ The client was authenticated with the env variable you've set in your `.env` fil
 At its core, this library allows you to easily check wether a specific user or organization is sponsoring another one:
 
 ```php
+/** @var \GitHub\Sponsors\ClientFactory $client */
+
 // Check if driesvints is being sponsored by nunomaduro...
-$client->isSponsoredBy('driesvints', 'nunomaduro');
+$client->login('driesvints')->isSponsoredBy('nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
+$client->login('blade-ui-kit')->isSponsoredBy('nunomaduro');
 ```
 
 ### Checking Sponsorships as a Viewer
@@ -128,17 +136,19 @@ $client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
 You can also perform these checks from the point-of-view of the user that was used to authenticate the GitHub API client. If you'll use the methods below, it would be as if you'd be browsing GitHub as the user that created the token.
 
 ```php
+/** @var \GitHub\Sponsors\ClientFactory $client */
+
 // Is the current authed user sponsoring driesvints?
-$client->isViewerSponsoring('driesvints');
+$client->viewer()->isSponsoring('driesvints');
 
 // Is the current authed user sponsoring the laravel organization?
-$client->isViewerSponsoring('laravel');
+$client->viewer()->isSponsoring('laravel');
 
 // Is the current authed user sponsored by driesvints?
-$client->isViewerSponsoredBy('driesvints');
+$client->viewer()->isSponsoredBy('driesvints');
 
 // Is the current authed user sponsored by the laravel organization?
-$client->isViewerSponsoredBy('laravel');
+$client->viewer()->isSponsoredBy('laravel');
 ```
 
 You might be wondering why we're using the "Viewer" wording here. "Viewer" is also a concept in the GraphQL API of GitHub. It represents the currently authenticated user that's performing the API requests. That's why we've decided to also use this terminology in the package's API.
@@ -148,11 +158,12 @@ You might be wondering why we're using the "Viewer" wording here. "Viewer" is al
 If you use Laravel you can also make use of the shipped `GitHubSponsors` facade:
 
 ```php
+use GitHub\Sponsors\Facades\GitHubSponsors;
 // Check if driesvints is being sponsored by nunomaduro...
-GitHubSponsors::isSponsoredBy('driesvints', 'nunomaduro');
+GitHubSponsors::login('driesvints')->isSponsoredBy('nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-GitHubSponsors::isSponsoredBy('blade-ui-kit', 'nunomaduro');
+GitHubSponsors::login('blade-ui-kit')->isSponsoredBy('nunomaduro');
 ```
 
 ### Sponsorable Behavior
@@ -274,23 +285,23 @@ When providing the sponsorable with a token, it'll initialize a new GitHub clien
 
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
-use GitHub\Sponsors\GitHubSponsors;
+use GitHub\Sponsors\Clients\LoginClient;
 
 class User
 {
     use Sponsorable;
 
-    private GitHubSponsors $client;
+    private LoginClient $client;
 
     private string $github;
 
-    public function __construct(GitHubSponsors $client, string $github)
+    public function __construct(LoginClient $client, string $github)
     {
         $this->client = $client;
         $this->github = $github;
     }
 
-    protected function sponsorsClient(): GitHubSponsors
+    protected function sponsorsClient(): LoginClient
     {
         return $this->client;
     }

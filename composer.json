@@ -39,7 +39,7 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "GitHubSponsors": "GitHub\\Sponsors\\Facades\\GitHubSponsorsFacade"
+                "GitHubSponsors": "GitHubSponsors"
             },
             "providers": [
                 "GitHub\\Sponsors\\GitHubSponsorsServiceProvider"

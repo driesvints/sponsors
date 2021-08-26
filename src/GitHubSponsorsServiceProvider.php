@@ -13,8 +13,8 @@ final class GitHubSponsorsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/github-sponsors.php', 'github-sponsors');
 
-        $this->app->singleton(GitHubSponsors::class, function () {
-            return new GitHubSponsors(new Factory(), config('github-sponsors.token'));
+        $this->app->singleton(ClientFactory::class, function () {
+            return new ClientFactory(config('github-sponsors.token'));
         });
     }
 
