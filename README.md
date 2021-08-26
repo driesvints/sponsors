@@ -21,7 +21,6 @@ Here's an example how you'd use it:
 
 ```php
 use GitHub\Sponsors\Client;
-use Illuminate\Http\Client\Factory;
 
 $client = new Client(getenv('GH_SPONSORS_TOKEN'));
 
@@ -98,9 +97,8 @@ To get started, initialize the GitHub API client, authenticate using the token (
 
 ```php
 use GitHub\Sponsors\Client;
-use Illuminate\Http\Client\Factory;
 
-$client = new Client(new Factory(), getenv('GH_SPONSORS_TOKEN'));
+$client = new Client(getenv('GH_SPONSORS_TOKEN'));
 ```
 
 This will be the client we'll use throughout the rest of these docs. We'll re-use the `$client` variable in the below examples.
@@ -122,8 +120,6 @@ The client was authenticated with the env variable you've set in your `.env` fil
 At its core, this library allows you to easily check wether a specific user or organization is sponsoring another one:
 
 ```php
-/** @var \GitHub\Sponsors\Client $client */
-
 // Check if driesvints is being sponsored by nunomaduro...
 $client->login('driesvints')->isSponsoredBy('nunomaduro');
 
@@ -136,8 +132,6 @@ $client->login('blade-ui-kit')->isSponsoredBy('nunomaduro');
 You can also perform these checks from the point-of-view of the user that was used to authenticate the GitHub API client. If you'll use the methods below, it would be as if you'd be browsing GitHub as the user that created the token.
 
 ```php
-/** @var \GitHub\Sponsors\Client $client */
-
 // Is the current authed user sponsoring driesvints?
 $client->viewer()->isSponsoring('driesvints');
 
@@ -159,6 +153,7 @@ If you use Laravel you can also make use of the shipped `GitHubSponsors` facade:
 
 ```php
 use GitHub\Sponsors\Facades\GitHubSponsors;
+
 // Check if driesvints is being sponsored by nunomaduro...
 GitHubSponsors::login('driesvints')->isSponsoredBy('nunomaduro');
 
@@ -224,8 +219,9 @@ If your sponsorable is an Eloquent model from Laravel, the setup differs a bit:
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
 use Illuminate\Database\Eloquent\Model;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
 
-class User extends Model;
+class User extends Model implements SponsorableContract
 {
     use Sponsorable;
 }
@@ -252,8 +248,9 @@ If you want to customize the `$github` & `$github_token` property names you'll a
 
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
 
-class User
+class User implements SponsorableContract
 {
     use Sponsorable;
 
@@ -286,8 +283,9 @@ When providing the sponsorable with a token, it'll initialize a new GitHub clien
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
 use GitHub\Sponsors\Clients\Login;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
 
-class User
+class User implements SponsorableContract
 {
     use Sponsorable;
 
