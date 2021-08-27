@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace GitHub\Sponsors\Concerns;
 
 use GitHub\Sponsors\Client;
-use GitHub\Sponsors\Clients\Login;
+use GitHub\Sponsors\Login;
 
 trait Sponsorable
 {
     public function isSponsoredBy(string $sponsor): bool
     {
-        return $this->sponsorsClient()
-            ->isSponsoredBy($sponsor);
+        return $this->sponsorsClient()->isSponsoredBy($sponsor);
     }
 
     public function isSponsoring(string $account): bool
     {
-        return $this->sponsorsClient()
-            ->isSponsoring($account);
+        return $this->sponsorsClient()->isSponsoring($account);
     }
 
     public function gitHubUsername(): string
@@ -38,9 +36,7 @@ trait Sponsorable
 
     protected function sponsorsClient(): Login
     {
-        $factory = $this->hasGitHubToken()
-            ? new Client($this->gitHubToken())
-            : app(Client::class);
+        $factory = $this->hasGitHubToken() ? new Client($this->gitHubToken()) : app(Client::class);
 
         return $factory->login($this->gitHubUsername());
     }
