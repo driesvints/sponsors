@@ -43,7 +43,6 @@ Here's some of the features on our roadmap. We'd always appreciate PR's to kicks
 
 - [Caching](https://github.com/github-php/sponsors/issues/1)
 - [Retrieve sponsorships](https://github.com/github-php/sponsors/issues/2)
-- [Adopt fluent syntax for client calls](https://github.com/github-php/sponsors/issues/13)
 - [Check sponsorship tiers](https://github.com/github-php/sponsors/issues/3)
 - [Create new Sponsorships](https://github.com/github-php/sponsors/issues/5)
 - [Automatically grant and revoke perks](https://github.com/github-php/sponsors/issues/7)
