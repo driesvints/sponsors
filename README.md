@@ -382,7 +382,7 @@ And that's it. Of course, you'd probably also want to protect any controller giv
 
 The way the GitHub GraphQL mostly works is [through personal access tokens](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql). Because these tokens are always created from a specific user in GitHub, the API calls will return results based on the visibility of the user and their access to the target resource.
 
-For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `isSponsoredBy('driesvints', 'spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `isSponsoredBy('nunomaduro', 'spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account. 
+For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `->login('driesvints')->isSponsoredBy('spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `->login('nunomaduro')->isSponsoredBy('spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account. 
 
 It is also important that if you're checking against organizations that you're using a token of a user that is a member of the organization. Any other GitHub user will not have access to check private sponsorships for that organization.
 
