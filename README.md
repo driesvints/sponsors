@@ -20,16 +20,21 @@ The library is PHP agnostic but provides deep integration with [Laravel](https:/
 Here's an example how you'd use it:
 
 ```php
-use GitHub\Sponsors\GitHubSponsors;
-use Illuminate\Http\Client\Factory;
+use GitHub\Sponsors\Client;
 
-$client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
+$client = new Client(getenv('GH_SPONSORS_TOKEN'));
 
 // Check if driesvints is being sponsored by nunomaduro...
-$client->isSponsoredBy('driesvints', 'nunomaduro');
+$client->login('driesvints')->isSponsoredBy('nunomaduro');
 
-// Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
+// Check if the blade-ui-kit organization is sponsored by nunomaduro...
+$client->login('nunomaduro')->isSponsoring('blade-ui-kit');
+
+// Check if the authenticated user is sponsored by Gummibeer...
+$client->viewer()->isSponsoredBy('Gummibeer');
+
+// Check if the authenticated user is sponsoring by driesvints...
+$client->viewer()->isSponsoring('driesvints');
 ```
 
 ## Roadmap
@@ -86,15 +91,14 @@ GH_SPONSORS_TOKEN=ghp_xxx
 
 ### Initializing the client
 
-All of this library's API calls are made from the core `GitHub\Sponsors\GitHubSponsors` client. The client makes use of the [Illuminate HTTP Client](https://laravel.com/docs/http-client) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
+All of this library's API calls are made from the core `GitHub\Sponsors\Client` class. The client makes use of the [Illuminate HTTP Client](https://laravel.com/docs/http-client) client to perform the API calls. This client needs to be authenticated using the GitHub Personal Access token which you've created in the [authentication](#authentication) step above.
 
 To get started, initialize the GitHub API client, authenticate using the token (preferable through an environment variable) and initialize the Sponsors client:
 
 ```php
-use GitHub\Sponsors\GitHubSponsors;
-use Illuminate\Http\Client\Factory;
+use GitHub\Sponsors\Client;
 
-$client = new GitHubSponsors(new Factory(), getenv('GH_SPONSORS_TOKEN'));
+$client = new Client(getenv('GH_SPONSORS_TOKEN'));
 ```
 
 This will be the client we'll use throughout the rest of these docs. We'll re-use the `$client` variable in the below examples.
@@ -104,9 +108,9 @@ This will be the client we'll use throughout the rest of these docs. We'll re-us
 If you're using Laravel, the client is already bound to the container as a singleton. Simply retrieve it from the container:
 
 ```php
-use GitHub\Sponsors\GitHubSponsors;
+use GitHub\Sponsors\Client;
 
-$client = app(GitHubSponsors::class);
+$client = app(Client::class);
 ```
 
 The client was authenticated with the env variable you've set in your `.env` file.
@@ -117,10 +121,10 @@ At its core, this library allows you to easily check wether a specific user or o
 
 ```php
 // Check if driesvints is being sponsored by nunomaduro...
-$client->isSponsoredBy('driesvints', 'nunomaduro');
+$client->login('driesvints')->isSponsoredBy('nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-$client->isSponsoredBy('blade-ui-kit', 'nunomaduro');
+$client->login('blade-ui-kit')->isSponsoredBy('nunomaduro');
 ```
 
 ### Checking Sponsorships as a Viewer
@@ -129,16 +133,16 @@ You can also perform these checks from the point-of-view of the user that was us
 
 ```php
 // Is the current authed user sponsoring driesvints?
-$client->isViewerSponsoring('driesvints');
+$client->viewer()->isSponsoring('driesvints');
 
 // Is the current authed user sponsoring the laravel organization?
-$client->isViewerSponsoring('laravel');
+$client->viewer()->isSponsoring('laravel');
 
 // Is the current authed user sponsored by driesvints?
-$client->isViewerSponsoredBy('driesvints');
+$client->viewer()->isSponsoredBy('driesvints');
 
 // Is the current authed user sponsored by the laravel organization?
-$client->isViewerSponsoredBy('laravel');
+$client->viewer()->isSponsoredBy('laravel');
 ```
 
 You might be wondering why we're using the "Viewer" wording here. "Viewer" is also a concept in the GraphQL API of GitHub. It represents the currently authenticated user that's performing the API requests. That's why we've decided to also use this terminology in the package's API.
@@ -148,11 +152,13 @@ You might be wondering why we're using the "Viewer" wording here. "Viewer" is al
 If you use Laravel you can also make use of the shipped `GitHubSponsors` facade:
 
 ```php
+use GitHub\Sponsors\Facades\GitHubSponsors;
+
 // Check if driesvints is being sponsored by nunomaduro...
-GitHubSponsors::isSponsoredBy('driesvints', 'nunomaduro');
+GitHubSponsors::login('driesvints')->isSponsoredBy('nunomaduro');
 
 // Check if the blade-ui-kit organization is being sponsored by nunomaduro...
-GitHubSponsors::isSponsoredBy('blade-ui-kit', 'nunomaduro');
+GitHubSponsors::login('blade-ui-kit')->isSponsoredBy('nunomaduro');
 ```
 
 ### Sponsorable Behavior
@@ -165,8 +171,9 @@ To get started, add the trait to any object you want to use it on and set the us
 
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
 
-class User
+class User implements SponsorableContract
 {
     use Sponsorable;
 
@@ -182,7 +189,9 @@ class User
 }
 ```
 
-The `$github_token` can be the same personal access token you use to initialize the `GitHubSponsors` client but **if you also want to check private sponsorships on the user** you'll need them to provide you with their own token.
+Notice that we also added the `GitHub\Sponsors\Contracts\Sponsorable` to make sure the API is properly implemented on the `User` class.
+
+The `$github_token` can be the same personal access token you use to initialize the `GitHub\Sponsors\Client` class but **if you also want to check private sponsorships on the user** you'll need them to provide you with their own token.
 
 > ⚠️ Note that there is no check being performed on wether the github username and a user provided personal access token belong together. This is your own responsibility to do through [an API call to GitHub](https://docs.github.com/en/graphql/reference/queries#user). 
 
@@ -212,9 +221,10 @@ If your sponsorable is an Eloquent model from Laravel, the setup differs a bit:
 
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model;
+class User extends Model implements SponsorableContract
 {
     use Sponsorable;
 }
@@ -222,7 +232,7 @@ class User extends Model;
 
 What's important is that there's a `github` column (`string`) on the model's table. This column will need to have the GitHub username that belongs to the model.
 
-With an Eloquent model, you also don't need to pass a personal access token. By default, it'll use the GitHub Sponsors client that's bound to the container. If you do want to identify the sponsorable to also check their private sponsorships you can add a `github_token` column (`string`) to the model's table and make sure the value is filled in. That way, all API requests will behave as if the user themselves is doing it.
+With an Eloquent model, you also don't need to pass a personal access token. By default, it'll use the `GitHub\Sponsors\Client` class that's bound to the container. If you do want to identify the sponsorable to also check their private sponsorships you can add a `github_token` column (`string`) to the model's table and make sure the value is filled in. That way, all API requests will behave as if the user themselves is doing it.
 
 > ⚠️ Note that there is no check being performed on wether the github username and a user provided personal access token belong together. This is your own responsibility to do through [an API call to GitHub](https://docs.github.com/en/graphql/reference/queries#user). 
 
@@ -241,8 +251,9 @@ If you want to customize the `$github` & `$github_token` property names you'll a
 
 ```php
 use GitHub\Sponsors\Concerns\Sponsorable;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
 
-class User
+class User implements SponsorableContract
 {
     use Sponsorable;
 
@@ -273,26 +284,28 @@ class User
 When providing the sponsorable with a token, it'll initialize a new GitHub client. You may also provide [the pre-set client](#initializing-the-client) if you wish:
 
 ```php
+use GitHub\Sponsors\Client;
 use GitHub\Sponsors\Concerns\Sponsorable;
-use GitHub\Sponsors\GitHubSponsors;
+use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
+use GitHub\Sponsors\Login;
 
-class User
+class User implements SponsorableContract
 {
     use Sponsorable;
 
-    private GitHubSponsors $client;
+    private Client $client;
 
     private string $github;
 
-    public function __construct(GitHubSponsors $client, string $github)
+    public function __construct(Client $client, string $github)
     {
         $this->client = $client;
         $this->github = $github;
     }
 
-    protected function sponsorsClient(): GitHubSponsors
+    protected function sponsorsClient(): Login
     {
-        return $this->client;
+        return $this->client->login($this->gitHubUsername());
     }
 }
 ```
@@ -303,7 +316,7 @@ class User
 
 PHP GitHub Sponsors is an ideal way to grant your users access to certain resources in your app. Therefor, it's also an ideal candidate for a Laravel policy. For example, you could write a policy that grants access to a product when a user is sponsoring you.
 
-First, you'll have to set [the `GH_SPONSORS_TOKEN` in your `.env` file](#initializing-the-client-using-laravel). This token needs to be created by the user that's being sponsored or a user that is a member of the organization that's being sponsored. Then, the `GitHubSponsors` client will be authenticated with this token.
+First, you'll have to set [the `GH_SPONSORS_TOKEN` in your `.env` file](#initializing-the-client-using-laravel). This token needs to be created by the user that's being sponsored or a user that is a member of the organization that's being sponsored. Then, the client will be authenticated with this token.
 
 Next, you'll need to [add the `Sponsorable` trait to your `User` model](#using-the-sponsorable-trait-with-eloquent). Additionally, you'll need to make sure that the `users` database has a `github` column (`VARCHAR(255)`) and all users have their GitHub usernames filled out.
 
