@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace GitHub\Sponsors;
 
-use GitHub\Sponsors\Clients\Login;
-use GitHub\Sponsors\Clients\Viewer;
-
 final class Client
 {
     private GraphqlClient $graphql;

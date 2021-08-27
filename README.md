@@ -283,8 +283,8 @@ When providing the sponsorable with a token, it'll initialize a new GitHub clien
 ```php
 use GitHub\Sponsors\Client;
 use GitHub\Sponsors\Concerns\Sponsorable;
-use GitHub\Sponsors\Clients\Login;
 use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
+use GitHub\Sponsors\Login;
 
 class User implements SponsorableContract
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GitHub\Sponsors\Clients;
+namespace GitHub\Sponsors;
 
 use GitHub\Sponsors\Contracts\Sponsorable;
 use GitHub\Sponsors\GraphqlClient;

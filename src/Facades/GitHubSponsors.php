@@ -8,8 +8,8 @@ use GitHub\Sponsors\Client;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \GitHub\Sponsors\Clients\Viewer viewer()
- * @method static \GitHub\Sponsors\Clients\Login login(string $login)
+ * @method static \GitHub\Sponsors\Viewer viewer()
+ * @method static \GitHub\Sponsors\Login login(string $login)
  *
  * @see \GitHub\Sponsors\Client
  */
