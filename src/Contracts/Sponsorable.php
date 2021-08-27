@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GitHub\Sponsors\Contracts;
 
 interface Sponsorable

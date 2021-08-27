@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace GitHub\Sponsors;
 
 use GitHub\Sponsors\Contracts\Sponsorable;
-use GitHub\Sponsors\GraphqlClient;
 
 final class Viewer implements Sponsorable
 {
-    private GraphqlClient $client;
+    private Client $client;
 
-    public function __construct(GraphqlClient $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
