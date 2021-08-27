@@ -11,12 +11,12 @@ trait Sponsorable
 {
     public function isSponsoredBy(string $sponsor): bool
     {
-        return $this->sponsorsClient()->isSponsoredBy($sponsor);
+        return $this->gitHubLogin()->isSponsoredBy($sponsor);
     }
 
     public function isSponsoring(string $account): bool
     {
-        return $this->sponsorsClient()->isSponsoring($account);
+        return $this->gitHubLogin()->isSponsoring($account);
     }
 
     public function gitHubUsername(): string
@@ -34,10 +34,13 @@ trait Sponsorable
         return $this->gitHubToken() !== null;
     }
 
-    protected function sponsorsClient(): Login
+    protected function gitHubLogin(): Login
     {
-        $factory = $this->hasGitHubToken() ? new Client($this->gitHubToken()) : app(Client::class);
+        return $this->sponsorsClient()->login($this->gitHubUsername());
+    }
 
-        return $factory->login($this->gitHubUsername());
+    protected function sponsorsClient(): Client
+    {
+        return $this->hasGitHubToken() ? new Client($this->gitHubToken()) : app(Client::class);
     }
 }

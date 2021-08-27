@@ -287,7 +287,6 @@ When providing the sponsorable with a token, it'll initialize a new GitHub clien
 use GitHub\Sponsors\Client;
 use GitHub\Sponsors\Concerns\Sponsorable;
 use GitHub\Sponsors\Contracts\Sponsorable as SponsorableContract;
-use GitHub\Sponsors\Login;
 
 class User implements SponsorableContract
 {
@@ -303,9 +302,9 @@ class User implements SponsorableContract
         $this->github = $github;
     }
 
-    protected function sponsorsClient(): Login
+    protected function sponsorsClient(): Client
     {
-        return $this->client->login($this->gitHubUsername());
+        return $this->client;
     }
 }
 ```
