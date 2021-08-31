@@ -50,6 +50,10 @@ final class Client
             throw QueryException::badQuery();
         }
 
+        if (is_array($response->json('errors')) && empty($response->json('data'))) {
+            throw new QueryException($response->json('errors.0.message'));
+        }
+
         return $response->json('data');
     }
 }

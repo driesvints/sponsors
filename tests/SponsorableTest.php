@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use GitHub\Sponsors\GitHubSponsorsServiceProvider;
+use Illuminate\Support\LazyCollection;
 use Orchestra\Testbench\TestCase;
 use Tests\Fixtures\Account;
 
@@ -72,6 +73,26 @@ class SponsorableTest extends TestCase
         $this->assertTrue(
             $this->sponsorable('akaunting')->isSponsoring('laravelio')
         );
+    }
+
+    /** @test */
+    public function user_can_check_if_it_has_sponsors()
+    {
+        $this->assertTrue(
+            $this->sponsorable('Gummibeer')->hasSponsors()
+        );
+    }
+
+    /** @test */
+    public function user_can_get_all_sponsors()
+    {
+        $sponsors = $this->sponsorable('Gummibeer')->sponsors();
+
+        $this->assertFalse($sponsors->isEmpty());
+        foreach ($sponsors as $sponsor) {
+            $this->assertArrayHasKey('login', $sponsor);
+            $this->assertIsString($sponsor['login']);
+        }
     }
 
     protected function sponsorable(string $username): Account

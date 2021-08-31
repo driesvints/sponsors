@@ -74,6 +74,66 @@ class ClientTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_can_check_if_the_authed_account_has_sponsors()
+    {
+        $this->assertTrue(
+            $this->client()->viewer()->hasSponsors()
+        );
+    }
+
+    /** @test */
+    public function it_can_retrieve_all_sponsors_of_the_authed_account()
+    {
+        $sponsors = $this->client()->viewer()->sponsors();
+
+        $this->assertFalse($sponsors->isEmpty());
+        foreach ($sponsors as $sponsor) {
+            $this->assertArrayHasKey('login', $sponsor);
+            $this->assertIsString($sponsor['login']);
+        }
+    }
+
+    /** @test */
+    public function it_can_check_if_an_user_has_sponsors()
+    {
+        $this->assertTrue(
+            $this->client()->login('Gummibeer')->hasSponsors()
+        );
+    }
+
+    /** @test */
+    public function it_can_retrieve_all_sponsors_of_an_user()
+    {
+        $sponsors = $this->client()->login('Gummibeer')->sponsors();
+
+        $this->assertFalse($sponsors->isEmpty());
+        foreach ($sponsors as $sponsor) {
+            $this->assertArrayHasKey('login', $sponsor);
+            $this->assertIsString($sponsor['login']);
+        }
+    }
+
+    /** @test */
+    public function it_can_check_if_an_organization_has_sponsors()
+    {
+        $this->assertTrue(
+            $this->client()->login('larabelles')->hasSponsors()
+        );
+    }
+
+    /** @test */
+    public function it_can_retrieve_all_sponsors_of_an_organization()
+    {
+        $sponsors = $this->client()->login('larabelles')->sponsors();
+
+        $this->assertFalse($sponsors->isEmpty());
+        foreach ($sponsors as $sponsor) {
+            $this->assertArrayHasKey('login', $sponsor);
+            $this->assertIsString($sponsor['login']);
+        }
+    }
+
     private function client(): Client
     {
         return $this->app->make(Client::class);
