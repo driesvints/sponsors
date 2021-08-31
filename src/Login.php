@@ -6,7 +6,6 @@ namespace GitHub\Sponsors;
 
 use Generator;
 use GitHub\Sponsors\Contracts\Sponsorable;
-use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Support\LazyCollection;
 
 final class Login implements Sponsorable

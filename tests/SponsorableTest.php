@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests;
 
 use GitHub\Sponsors\GitHubSponsorsServiceProvider;
-use Illuminate\Support\LazyCollection;
 use Orchestra\Testbench\TestCase;
 use Tests\Fixtures\Account;
 
