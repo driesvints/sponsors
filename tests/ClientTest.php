@@ -83,11 +83,12 @@ class ClientTest extends TestCase
     }
 
     /** @test */
-    public function it_can_retrieve_all_sponsors_of_the_authed_account()
+    public function it_can_retrieve_all_sponsors_for_the_authed_account()
     {
         $sponsors = $this->client()->viewer()->sponsors();
 
         $this->assertFalse($sponsors->isEmpty());
+
         foreach ($sponsors as $sponsor) {
             $this->assertArrayHasKey('login', $sponsor);
             $this->assertIsString($sponsor['login']);
@@ -95,7 +96,7 @@ class ClientTest extends TestCase
     }
 
     /** @test */
-    public function it_can_check_if_an_user_has_sponsors()
+    public function it_can_check_if_a_user_has_sponsors()
     {
         $this->assertTrue(
             $this->client()->login('Gummibeer')->hasSponsors()
@@ -108,6 +109,7 @@ class ClientTest extends TestCase
         $sponsors = $this->client()->login('Gummibeer')->sponsors();
 
         $this->assertFalse($sponsors->isEmpty());
+
         foreach ($sponsors as $sponsor) {
             $this->assertArrayHasKey('login', $sponsor);
             $this->assertIsString($sponsor['login']);
@@ -123,11 +125,12 @@ class ClientTest extends TestCase
     }
 
     /** @test */
-    public function it_can_retrieve_all_sponsors_of_an_organization()
+    public function it_can_retrieve_all_sponsors_for_an_organization()
     {
         $sponsors = $this->client()->login('larabelles')->sponsors();
 
         $this->assertFalse($sponsors->isEmpty());
+
         foreach ($sponsors as $sponsor) {
             $this->assertArrayHasKey('login', $sponsor);
             $this->assertIsString($sponsor['login']);

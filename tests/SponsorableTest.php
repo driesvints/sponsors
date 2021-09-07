@@ -75,7 +75,7 @@ class SponsorableTest extends TestCase
     }
 
     /** @test */
-    public function user_can_check_if_it_has_sponsors()
+    public function users_can_check_if_they_have_sponsors()
     {
         $this->assertTrue(
             $this->sponsorable('Gummibeer')->hasSponsors()
@@ -83,11 +83,12 @@ class SponsorableTest extends TestCase
     }
 
     /** @test */
-    public function user_can_get_all_sponsors()
+    public function users_can_retrieve_their_sponsors()
     {
         $sponsors = $this->sponsorable('Gummibeer')->sponsors();
 
         $this->assertFalse($sponsors->isEmpty());
+
         foreach ($sponsors as $sponsor) {
             $this->assertArrayHasKey('login', $sponsor);
             $this->assertIsString($sponsor['login']);
