@@ -182,7 +182,7 @@ foreach ($sponsors as $sponsor) {
 
 Lastly you may use the `hasSponsors` check to see if an account has any sponsors at all:
 
-```blade
+```php
 if ($client->login('Gummibeer')->hasSponsors() {
     // ...
 }
