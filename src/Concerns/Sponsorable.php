@@ -6,6 +6,7 @@ namespace GitHub\Sponsors\Concerns;
 
 use GitHub\Sponsors\Client;
 use GitHub\Sponsors\Login;
+use Illuminate\Support\LazyCollection;
 
 trait Sponsorable
 {
@@ -17,6 +18,16 @@ trait Sponsorable
     public function isSponsoring(string $account): bool
     {
         return $this->gitHubLogin()->isSponsoring($account);
+    }
+
+    public function sponsors(array $select = ['login']): LazyCollection
+    {
+        return $this->gitHubLogin()->sponsors($select);
+    }
+
+    public function hasSponsors(): bool
+    {
+        return $this->gitHubLogin()->hasSponsors();
     }
 
     public function gitHubUsername(): string

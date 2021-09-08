@@ -74,6 +74,27 @@ class SponsorableTest extends TestCase
         );
     }
 
+    /** @test */
+    public function users_can_check_if_they_have_sponsors()
+    {
+        $this->assertTrue(
+            $this->sponsorable('Gummibeer')->hasSponsors()
+        );
+    }
+
+    /** @test */
+    public function users_can_retrieve_their_sponsors()
+    {
+        $sponsors = $this->sponsorable('Gummibeer')->sponsors();
+
+        $this->assertFalse($sponsors->isEmpty());
+
+        foreach ($sponsors as $sponsor) {
+            $this->assertArrayHasKey('login', $sponsor);
+            $this->assertIsString($sponsor['login']);
+        }
+    }
+
     protected function sponsorable(string $username): Account
     {
         return new Account($username);
