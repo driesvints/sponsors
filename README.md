@@ -27,14 +27,14 @@ $client = new Client(getenv('GH_SPONSORS_TOKEN'));
 // Check if driesvints is being sponsored by nunomaduro...
 $client->login('driesvints')->isSponsoredBy('nunomaduro');
 
-// Check if the blade-ui-kit organization is sponsored by nunomaduro...
-$client->login('nunomaduro')->isSponsoring('blade-ui-kit');
-
 // Check if the authenticated user is sponsored by Gummibeer...
 $client->viewer()->isSponsoredBy('Gummibeer');
 
 // Check if the authenticated user is sponsoring driesvints...
 $client->viewer()->isSponsoring('driesvints');
+
+// Get all of the sponsors for Gummibeer...
+$sponsors = $client->login('Gummibeer')->sponsors();
 ```
 
 ## Roadmap
@@ -42,7 +42,6 @@ $client->viewer()->isSponsoring('driesvints');
 Here's some of the features on our roadmap. We'd always appreciate PR's to kickstart these.
 
 - [Caching](https://github.com/github-php/sponsors/issues/1)
-- [Retrieve sponsorships](https://github.com/github-php/sponsors/issues/2)
 - [Check sponsorship tiers](https://github.com/github-php/sponsors/issues/3)
 - [Create new Sponsorships](https://github.com/github-php/sponsors/issues/5)
 - [Automatically grant and revoke perks](https://github.com/github-php/sponsors/issues/7)
@@ -160,6 +159,35 @@ GitHubSponsors::login('driesvints')->isSponsoredBy('nunomaduro');
 GitHubSponsors::login('blade-ui-kit')->isSponsoredBy('nunomaduro');
 ```
 
+### Retrieving Sponsors
+
+You can also use the client to retrieve sponsorships:
+
+```php
+$sponsors = $client->login('Gummibeer')->sponsors();
+```
+
+This will return an instance of `Illuminate\Support\LazyCollection` which contains the lazy loaded sponsorships of the given account. 
+
+Additionally, you may retrieve additional fields that are available on the [User](https://docs.github.com/en/graphql/reference/objects#user) and [Organization](https://docs.github.com/en/graphql/reference/objects#organization) objects:
+
+```php
+$sponsors = $client->login('Gummibeer')->sponsors(['avatarUrl', 'name']);
+
+foreach ($sponsors as $sponsor) {
+    $sponsor['avatarUrl']; // The sponsor's GitHub avatar url...
+    $sponsor['name']; // The sponsor's GitHub name...
+}
+```
+
+Lastly you may use the `hasSponsors` check to see if an account has any sponsors at all:
+
+```blade
+if ($client->login('Gummibeer')->hasSponsors() {
+    // ...
+}
+```
+
 ### Sponsorable Behavior
 
 PHP GitHub Sponsors ships with a `Sponsorable` trait that can add sponsorable behavior to an object. Let's say you have a `User` object in your app. By letting that user provide a personal access token of their own, you can perform sponsorship checks on them as if they were browsing GitHub themselves.
@@ -212,6 +240,12 @@ $user->isSponsoring('nunomaduro');
 
 // Check if driesvints is sponsoring spatie...
 $user->isSponsoring('spatie');
+
+// Retrieve all of the sponsors for driesvints...
+$sponsors = $user->sponsors();
+
+// Check if driesvints has any sponsors...
+$user->hasSponsors();
 ```
 
 #### Using the `Sponsorable` trait with Eloquent
