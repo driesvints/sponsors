@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/packagist/dt/github-php/sponsors" alt="Total Downloads">
 </a>
 
-PHP GitHub Sponsors is a package that integrates directly with [the GitHub Sponsors GraphQL API](https://docs.github.com/en/sponsors/integrating-with-github-sponsors/getting-started-with-the-sponsors-graphql-api). Using it, you can easily check if a GitHub account is sponsoring another account. This helps you implement powerful ACL capibilities in your application and the ability to grant users access to specific resources when they sponsor you.
+PHP GitHub Sponsors is a package that integrates directly with [the GitHub Sponsors GraphQL API](https://docs.github.com/en/sponsors/integrating-with-github-sponsors/getting-started-with-the-sponsors-graphql-api). Using it, you can easily check if a GitHub account is sponsoring another account. This helps you implement powerful ACL capabilities in your application and the ability to grant users access to specific resources when they sponsor you.
 
 The library is PHP agnostic but provides deep integration with [Laravel](https://laravel.com).
 
