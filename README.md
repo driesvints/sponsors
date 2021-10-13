@@ -101,6 +101,16 @@ $client = new Client(getenv('GH_SPONSORS_TOKEN'));
 
 This will be the client we'll use throughout the rest of these docs. We'll re-use the `$client` variable in the below examples.
 
+Additionally, you have two named constructors that you can use: `withEnv` that accepts an environment variable and `withToken` that accepts a token.
+
+```php
+use GitHub\Sponsors\Client;
+
+$client = Client::withEnv('GH_SPONSORS_TOKEN');
+
+$client = Client::withToken(getenv('GH_SPONSORS_TOKEN'));
+```
+
 ### Initializing the client using Laravel
 
 If you're using Laravel, the client is already bound to the container as a singleton. Simply retrieve it from the container:
