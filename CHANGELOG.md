@@ -3,7 +3,13 @@
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com).
 
 
-## [Unreleased](https://github.com/github-php/sponsors/compare/0.3.0...main)
+## [Unreleased](https://github.com/github-php/sponsors/compare/0.3.1...main)
+
+
+## [0.3.1 (2021-10-13)](https://github.com/github-php/sponsors/compare/0.3.0...0.3.1)
+
+### Added
+- Add `withEnv()` and `withToken()` methods ([#19](https://github.com/github-php/sponsors/pull/19))
 
 
 ## [0.3.0 (2021-09-08)](https://github.com/github-php/sponsors/compare/0.2.0...0.3.0)
