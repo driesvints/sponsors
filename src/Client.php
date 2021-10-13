@@ -20,6 +20,16 @@ final class Client
         $this->token = $token;
     }
 
+    public static function withEnv(string $env, Factory $http = null): self
+    {
+        return new self(getenv($env), $http);
+    }
+
+    public static function withToken(string $token, Factory $http = null): self
+    {
+        return new self($token, $http);
+    }
+
     public function viewer(): Viewer
     {
         return new Viewer($this);
