@@ -1,3 +1,5 @@
+<p align="center"><img src="/art/header.png" alt="PHP GitHub Sponsors logo"></p>
+
 # PHP GitHub Sponsors
 
 <a href="https://github.com/github-php/sponsors/actions?query=workflow%3ATests">
@@ -73,7 +75,7 @@ Please refer to [`the upgrade guide`](UPGRADE.md) when updating the library.
 
 All of the GitHub GraphQL autentication goes through a [personal access token](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql). A token is **always** needed when working with the GitHub GraphQL.
 
-To get started using this library, head over to [your settings screen](https://github.com/settings/tokens) and create a personal access token that has access to the `user:read` and `org:read` scopes. This is the token that you'll use in the code examples below. 
+To get started using this library, head over to [your settings screen](https://github.com/settings/tokens) and create a personal access token that has access to the `user:read` and `org:read` scopes. This is the token that you'll use in the code examples below.
 
 It's important to note that this will be the main point-of-view of how the GraphQL will view sponsorships so make sure to pick the correct user account. For example, if you're Laravel and you need to perform checks to see if anyone is sponsoring Laravel publically or privately, the token should be created under someone who has access to the Laravel organization (like `taylorotwell`).
 
@@ -177,7 +179,7 @@ You can also use the client to retrieve sponsorships:
 $sponsors = $client->login('Gummibeer')->sponsors();
 ```
 
-This will return an instance of `Illuminate\Support\LazyCollection` which contains the lazy loaded sponsorships of the given account. 
+This will return an instance of `Illuminate\Support\LazyCollection` which contains the lazy loaded sponsorships of the given account.
 
 Additionally, you may retrieve additional fields that are available on the [User](https://docs.github.com/en/graphql/reference/objects#user) and [Organization](https://docs.github.com/en/graphql/reference/objects#organization) objects:
 
@@ -230,7 +232,7 @@ Notice that we also added the `GitHub\Sponsors\Contracts\Sponsorable` to make su
 
 The `$github_token` can be the same personal access token you use to initialize the `GitHub\Sponsors\Client` class but **if you also want to check private sponsorships on the user** you'll need them to provide you with their own token.
 
-> ⚠️ Note that there is no check being performed on wether the github username and a user provided personal access token belong together. This is your own responsibility to do through [an API call to GitHub](https://docs.github.com/en/graphql/reference/queries#user). 
+> ⚠️ Note that there is no check being performed on wether the github username and a user provided personal access token belong together. This is your own responsibility to do through [an API call to GitHub](https://docs.github.com/en/graphql/reference/queries#user).
 
 #### Using the sponsorable
 
@@ -277,7 +279,7 @@ What's important is that there's a `github` column (`string`) on the model's tab
 
 With an Eloquent model, you also don't need to pass a personal access token. By default, it'll use the `GitHub\Sponsors\Client` class that's bound to the container. If you do want to identify the sponsorable to also check their private sponsorships you can add a `github_token` column (`string`) to the model's table and make sure the value is filled in. That way, all API requests will behave as if the user themselves is doing it.
 
-> ⚠️ Note that there is no check being performed on wether the github username and a user provided personal access token belong together. This is your own responsibility to do through [an API call to GitHub](https://docs.github.com/en/graphql/reference/queries#user). 
+> ⚠️ Note that there is no check being performed on wether the github username and a user provided personal access token belong together. This is your own responsibility to do through [an API call to GitHub](https://docs.github.com/en/graphql/reference/queries#user).
 
 And then you can use the model as follows:
 
@@ -412,7 +414,7 @@ And now we can use the policy to do ACL checks to see if the authenticated user 
 @else
     <a href="https://github.com/sponsors/spatie">
         Sponsor us to use our products!
-    </a> 
+    </a>
 @endcan
 ```
 
@@ -424,7 +426,7 @@ And that's it. Of course, you'd probably also want to protect any controller giv
 
 The way the GitHub GraphQL mostly works is [through personal access tokens](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql#authenticating-with-graphql). Because these tokens are always created from a specific user in GitHub, the API calls will return results based on the visibility of the user and their access to the target resource.
 
-For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `->login('driesvints')->isSponsoredBy('spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `->login('nunomaduro')->isSponsoredBy('spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account. 
+For example, if I as `driesvints` were to privately sponsor `spatie` I could do an `->login('driesvints')->isSponsoredBy('spatie')` check and it would return `true` for me because I have access to my account through my personal access token that was created on `driesvints`. But if `nunomaduro` would be privately sponsoring `spatie` and I was to attempt `->login('nunomaduro')->isSponsoredBy('spatie')` with the token created on `driesvints`, it will return false because I don't have access to `nunomaduro`'s account.
 
 It is also important that if you're checking against organizations that you're using a token of a user that is a member of the organization. Any other GitHub user will not have access to check private sponsorships for that organization.
 
@@ -441,6 +443,8 @@ Check out the [CHANGELOG](CHANGELOG.md) in this repository for all the recent ch
 ## Maintainers
 
 PHP GitHub Sponsors is developed and maintained by [Dries Vints](https://driesvints.com) and [Tom Witkowski](https://gummibeer.dev).
+
+And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
 ## License
 
