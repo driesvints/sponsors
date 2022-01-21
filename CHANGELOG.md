@@ -3,7 +3,13 @@
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com).
 
 
-## [Unreleased](https://github.com/github-php/sponsors/compare/0.3.1...main)
+## [Unreleased](https://github.com/github-php/sponsors/compare/0.3.2...main)
+
+
+## [0.3.2 (2022-01-21)](https://github.com/github-php/sponsors/compare/0.3.1...0.3.2)
+
+### Changed
+- Add Laravel 9 Support ([#22](https://github.com/github-php/sponsors/pull/22))
 
 
 ## [0.3.1 (2021-10-13)](https://github.com/github-php/sponsors/compare/0.3.0...0.3.1)
