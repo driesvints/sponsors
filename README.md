@@ -1,3 +1,7 @@
+<a href="https://supportukrainenow.org/"><img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg" width="100%"></a>
+
+------
+
 <p align="center"><img src="/art/header.png" alt="PHP GitHub Sponsors logo"></p>
 
 # PHP GitHub Sponsors
