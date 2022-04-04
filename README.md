@@ -1,4 +1,6 @@
-<a href="https://supportukrainenow.org/"><img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg" width="100%"></a>
+> Sadly, I have decided to abandon this project. Feel free to fork this repo if you want.
+>
+> -- Dries 
 
 ------
 
